@@ -270,11 +270,11 @@ These firmware images ship pre-configured with `mqtt1.meshcore.ca` and `mqtt2.me
     set mqtt5.preset none
     set mqtt6.preset none
     set mqtt1.preset custom
-    set mqtt1.server wss://mqtt1.meshcore.ca:443/mqtt
+    set mqtt1.server wss://mqtt1.meshcore.ca:443
     set mqtt1.port 443
     set mqtt1.audience mqtt1.meshcore.ca
     set mqtt2.preset custom
-    set mqtt2.server wss://mqtt2.meshcore.ca:443/mqtt
+    set mqtt2.server wss://mqtt2.meshcore.ca:443
     set mqtt2.port 443
     set mqtt2.audience mqtt2.meshcore.ca
     ```
