@@ -4,6 +4,9 @@ hide:
 ---
 # MeshCore Canada
 
+!!! warning "Community Project"
+    **meshcore.ca** is an independent community site. We're not affiliated with, endorsed by, or officially connected to the MeshCore or MeshOS projects. We're just a group of Canadians helping other Canadians organize their local meshes and build useful tools for the community.
+
 Canada's community hub for MeshCore, a long-range, low-power mesh protocol built on LoRa radios.
 
 Whether you're brand new to mesh networking or looking to deploy repeaters across your region, you'll find guides, hardware recommendations, and your local community here.
@@ -47,6 +50,16 @@ Whether you're brand new to mesh networking or looking to deploy repeaters acros
     [:octicons-arrow-right-24: Getting Started](resources/getting-started.md)
 
 </div>
+
+---
+
+## Who We Are
+
+We are a group of Canadian meshes across the country from British Columbia, Alberta, Ontario, and Quebec (hopefully more soon) that are working together to bring services and standards across Canada for all MeshCore users. We host MQTT servers and a packet analyzer at this site for all Canadians to use.
+
+The servers and services are currently managed by **MrAlders0n**, **Ded**, and **n30nex**.
+
+The documentation on this site is open to all to contribute to and is backed by markdown files in GitHub at [MeshCore-ca/MeshCore-Canada](https://github.com/MeshCore-ca/MeshCore-Canada).
 
 ---
 
