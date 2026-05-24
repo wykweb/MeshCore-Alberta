@@ -33,7 +33,7 @@ Choose a role:
 - **Room server**: a fixed node that hosts rooms and can also observe mesh traffic.
 - **Observer**: a device or host service that forwards packets to the MeshCore.ca MQTT analyzer.
 
-Start with [Recommended Companions](../meshcore/companions.md) if you want a personal device, or [Recommended Repeaters](../meshcore/repeaters.md) if you are building a fixed node.
+Start with [Recommended Companions](../hardware/recommended-companions.md) if you want a personal device, or [Recommended Repeaters](../hardware/recommended-repeaters.md) if you are building a fixed node.
 
 ## Step 3: Flash the Firmware
 

@@ -27,7 +27,7 @@ Whether you're brand new to mesh networking or looking to deploy repeaters acros
 
     Learn what MeshCore is, browse the FAQ, and find recommended hardware for companions, repeaters, and antennas.
 
-    [:octicons-arrow-right-24: Introduction](meshcore/intro.md)
+    [:octicons-arrow-right-24: Introduction](meshcore/general-overview.md)
 
 -   :material-chart-timeline-variant:{ .lg .middle } **Analyzer & MQTT**
 

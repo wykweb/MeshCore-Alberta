@@ -35,13 +35,6 @@ markdown_extensions:
 
 nav:
   - Welcome: index.md
-  - MeshCore:
-      - Introduction: meshcore/intro.md
-      - FAQ: meshcore/faq.md
-      - Recommended Companions: meshcore/companions.md
-      - Recommended Repeaters: meshcore/repeaters.md
-      - Repeater Build Guides: meshcore/repeater-builds.md
-      - Recommended Antennas: meshcore/antennas.md
   - Analyzer & MQTT:
       - Overview: analyzer/intro.md
       - Check Your Observer: analyzer/verify.md
@@ -58,9 +51,10 @@ nav:
       - Overview: hardware/overview.md
       - Antenna: hardware/recommended-antenna.md
       - Companion Nodes: hardware/recommended-companions.md
-      - Repeater Nodes: 
+      - Repeater Nodes:
           - Repeater Nodes:  hardware/recommended-repeaters.md
           - Repeater Mounting Options: hardware/repeater-mounting-options.md
+          - Repeater Solar Batteries: hardware/repeater-solar-batteries.md
           - 300mW Solar Repeater Build Guide: hardware/repeater-solar-300mw-diy-build.md
           - 1W Solar Repeater Build Guide: hardware/repeater-solar-1w-diy-build.md
       - Wire Connector Types: hardware/wire-connector-types.md

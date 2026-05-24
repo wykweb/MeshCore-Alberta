@@ -41,4 +41,4 @@ If you are just getting started, we recommend this path:
 3. Skim the **[MeshCore FAQ](general-faq.md)** so you know what to expect from the network.
 4. Use the **[MeshCore How-To](general-howto.md)** walkthroughs to share contacts and start messaging.
 
-When you are ready to contribute to the network backbone, move on to **[Flashing a Repeater](flash-repeater.md)** and the **[Deployment](../deployment/repeaters.md)** section.
+When you are ready to contribute to the network backbone, move on to **[Flashing a Repeater](flash-repeater.md)** and the **[Hardware](../hardware/recommended-repeaters.md)** section.

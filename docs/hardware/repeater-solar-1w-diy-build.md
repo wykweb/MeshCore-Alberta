@@ -1,7 +1,10 @@
 # Building a 1W Solar Repeater – Ikoka Stick
 
-!!! warning "Work In Progress"
-    THIS IS A WORK IN PROGRESS AND IS NOT FINAL, please contact **MrAlders0n** for questions related to the build.
+Authored By: MrAlders0n (Ottawa)
+Date: 2026-01-01
+
+!!! warning "No warranty"
+    This is to help the community understand how to make a repeater, and I by no means provide any warranty for anyone following this guide. Please test everything first with a multimeter and other tools before powering anything on.
 
 **Board:** GOME Ikoka Stick (HW v0.4.0)  
 **Power:** Waveshare Solar Power Manager (standard)  

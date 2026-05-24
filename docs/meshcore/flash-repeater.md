@@ -62,7 +62,7 @@ If flashing fails after erasing, refresh the page, click **Enter DFU Mode** agai
    - The Repeater ID is derived from the keypair (it corresponds to the **first byte / first two hex characters** of the repeater’s key).
    - Because there are only **256 possible IDs**, overlaps become more likely as the network grows, especially when keys are generated automatically during flashing.
 
-4. Check the **[Ottawa Repeater ID List](../deployment/repeaters.md)** to confirm your repeater ID is **not already in use**.
+4. Check the **[Ottawa Repeater ID List](../hardware/recommended-repeaters.md)** to confirm your repeater ID is **not already in use**.
    - If it’s unique, continue with the next step.
    - If it’s already in use, follow the **[Generating a Repeater ID](generate-repeater-id.md)** instructions to assign a new one, then return here to continue.
 
