@@ -2,10 +2,13 @@
 hide:
   - toc
 ---
-# MeshCore Canada
+<div class="home-title" markdown>
+# MeshCore Canada { .home-heading }
 
-<div class="home-discord-link" markdown>
-[:fontawesome-brands-discord:](https://discord.gg/BESFVMt7yk){ .discord-logo-link aria-label="Join the MeshCore Canada Discord" title="Join the MeshCore Canada Discord" target="_blank" rel="noopener" }
+<div class="home-social-links" markdown>
+[:fontawesome-brands-discord:](https://discord.gg/BESFVMt7yk){ .social-link .discord-link aria-label="Join the MeshCore Canada Discord" title="Join the MeshCore Canada Discord" target="_blank" rel="noopener" }
+[:fontawesome-solid-comments:](https://forum.meshcore.ca){ .social-link .forum-link aria-label="MeshCore Canada Forum" title="MeshCore Canada Forum" target="_blank" rel="noopener" }
+</div>
 </div>
 
 !!! warning "Community Project"
