@@ -2,14 +2,7 @@
 hide:
   - toc
 ---
-<div class="home-title" markdown>
-# MeshCore Canada { .home-heading }
-
-<div class="home-social-links" markdown>
-[:fontawesome-brands-discord:](https://discord.gg/BESFVMt7yk){ .social-link .discord-link aria-label="Join the MeshCore Canada Discord" title="Join the MeshCore Canada Discord" target="_blank" rel="noopener" }
-[:fontawesome-solid-comments:](https://forum.meshcore.ca){ .social-link .forum-link aria-label="MeshCore Canada Forum" title="MeshCore Canada Forum" target="_blank" rel="noopener" }
-</div>
-</div>
+# MeshCore Canada
 
 !!! warning "Community Project"
     **meshcore.ca** is an independent community site. We're not affiliated with, endorsed by, or officially connected to the MeshCore or MeshOS projects. We're just a group of Canadians helping other Canadians organize their local meshes and build useful tools for the community.
@@ -17,6 +10,26 @@ hide:
 Canada's community hub for MeshCore, a long-range, low-power mesh protocol built on LoRa radios.
 
 Whether you're brand new to mesh networking or looking to deploy repeaters across your region, you'll find guides, hardware recommendations, and your local community here.
+
+<div class="grid cards" markdown>
+
+-   :fontawesome-brands-discord:{ .lg .middle } **Discord**
+
+    ---
+
+    Join the MeshCore Canada Discord to chat with the community, ask questions, and stay up to date.
+
+    [:octicons-arrow-right-24: Join Discord](https://discord.gg/BESFVMt7yk){ target="_blank" rel="noopener" }
+
+-   :fontawesome-solid-comments:{ .lg .middle } **Forum**
+
+    ---
+
+    Browse discussions, share builds, and find answers on the MeshCore Canada community forum.
+
+    [:octicons-arrow-right-24: Visit Forum](https://forum.meshcore.ca){ target="_blank" rel="noopener" }
+
+</div>
 
 ---
 
