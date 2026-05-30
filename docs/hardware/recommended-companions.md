@@ -51,7 +51,7 @@ The MeshCore/Meshtastic app connects to the node over Bluetooth (BLE) and is use
 | Item         | Product Name                  | Cost (CAD) | Link |
 |--------------|-------------------------------|------------|------|
 | **LoRa Board** | Heltec T114 (Bundle with screen) | $45.99 | [AliExpress](https://www.aliexpress.com/item/1005007916299029.html)|
-| **Right-angle Pigtail Cable** | SMA-KW 2PCS 8cm | $4.67 | [AliExpress](https://www.aliexpress.com/item/1005009270132403.html?)|
+| **Right-angle IPEX to SMA Pigtail Cable** | SMA-KW 2PCS 8cm | $4.67 | [AliExpress](https://www.aliexpress.com/item/1005009270132403.html?)|
 | **Battery**   | Makerfocus 3.7V 3000mAh LiPo - (Pack of 4), Micro JST 1.5 connection with protection board | $34.34     | [MakerFocus](https://www.makerfocus.com/products/makerfocus-3-7v-3000mah-lithium-rechargeable-battery-1s-3c-lipo-battery-pack-of-4?variant=44823607541998) |
 | **Antenna** | Gizont 167CM 915MHz SMA M |$10.68 | [AliExpress](https://www.aliexpress.com/item/1005004607615001.html) (Make sure you select the right antenna when opening the link)
 
@@ -59,7 +59,7 @@ The MeshCore/Meshtastic app connects to the node over Bluetooth (BLE) and is use
 *Prices will vary and may include shipping costs, so please confirm with links. MakerFocus batteries are shipped from China with no duties.*
 
 !!! warning "Case for Example DIY Build"
-    This DIY build example does not include a case. For 3D-printable cases, check out **[Alley Cat’s models](https://www.printables.com/@AlleyCat/models)** — they are excellent for custom companion node builds. Make sure the case you choose will fit the 3000 mAh battery.
+    This DIY build example does not include a case. For 3D-printable cases, check out **[Alley Cat’s models](https://www.printables.com/@AlleyCat/models)** — they are excellent for custom companion node builds. Make sure the case you choose will fit the 3000 mAh battery and the right angle IPEX to SMA connector.
 
 If you are in the Ottawa area, you can also purchase this build fully assembled locally from [Space Hedgehog](https://space-hedgehog.com/).
 
