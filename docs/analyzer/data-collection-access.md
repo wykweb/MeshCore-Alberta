@@ -9,12 +9,6 @@ MeshCore Canada MQTT receives packet data from observer nodes that capture MeshC
 
 Observers listen for all MeshCore traffic they can hear on the channels and presets they are configured for. If a packet is heard by an observer and that observer has packet publishing enabled, that traffic can be sent to the MeshCore Canada MQTT brokers.
 
-## User Control
-
-For companion/client paths that expose controls, users can opt in or opt out of telemetry and location data uploading as part of their observer setup.
-
-It is each user's responsibility to choose how much personal information to share from their radios over MQTT. If telemetry, location, or identifying profile information is enabled on a client, that data may be published, stored, and displayed by public viewer sites. Double check your settings.
-
 ## Where Data Goes
 
 | Step | What happens |
