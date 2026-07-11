@@ -85,4 +85,6 @@ The documentation on this site is open to all to contribute to and is backed by 
 
 ## Want to Contribute?
 
-This site is community-driven. If you want to add your local mesh, fix a typo, or contribute a build guide, check out the [Contributing](contributing.md) page.
+This site is community-driven. You do not need to know Git, GitHub, or MeshCore terminology to help. Use the [Share an Idea](submit-idea.md) page to describe what you noticed or what would make the project better. The page prepares a clear submission you can send through GitHub, the forum, or Discord.
+
+Experienced contributors can still use the [Contributing](contributing.md) page for issue templates and pull requests.

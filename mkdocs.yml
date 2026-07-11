@@ -18,6 +18,9 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
+extra_javascript:
+  - javascripts/submission-form.js
+
 markdown_extensions:
   - admonition
   - attr_list
@@ -92,5 +95,6 @@ nav:
       - Getting Started: resources/getting-started.md
       - Useful Links: resources/links.md
       - Glossary: resources/glossary.md
+  - Share an Idea: submit-idea.md
   - Forum: https://forum.meshcore.ca/
   - Contributing: contributing.md

@@ -1,0 +1,95 @@
+name: Share a Community Idea
+description: Suggest an improvement without needing code, Git, or perfect MeshCore terminology.
+title: "[Community idea] "
+labels: ["enhancement"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping MeshCore Canada improve. Describe what you experienced in your own words.
+        You do not need to know the technical solution. Please do not post passwords, private channel keys, API tokens, exact home addresses, or private coordinates.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Contribution type
+      description: Choose the closest match. Maintainers can re-categorize it later.
+      options:
+        - Newcomer or accessibility improvement
+        - Documentation correction
+        - Hardware or build-guide idea
+        - Regional community information
+        - Network tool or service idea
+        - Feature or project idea
+        - Other community feedback
+    validations:
+      required: true
+
+  - type: dropdown
+    id: experience
+    attributes:
+      label: MeshCore experience
+      options:
+        - Brand new / researching
+        - Setting up my first node
+        - Active mesh user
+        - Repeater, room server, or observer operator
+        - Developer or documentation contributor
+    validations:
+      required: true
+
+  - type: input
+    id: summary
+    attributes:
+      label: Short title
+      description: One sentence describing the idea or need.
+      placeholder: A printable checklist for first-time repeater installs
+    validations:
+      required: true
+
+  - type: input
+    id: region
+    attributes:
+      label: City or broad region
+      description: Optional. Do not include a home address or private coordinates.
+      placeholder: Waterloo Region, Ontario
+
+  - type: textarea
+    id: need
+    attributes:
+      label: What are you trying to do, or what is difficult today?
+      description: Tell us where you got stuck, what was missing, or what you observed.
+      placeholder: I was setting up my first node and could not tell whether...
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would make it better?
+      description: A rough idea is welcome. You do not need to design the complete solution.
+      placeholder: It would help if the site included...
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Optional device, app, page, screenshot description, prior attempt, or affected audience.
+
+  - type: input
+    id: follow_up
+    attributes:
+      label: Public username or profile for follow-up
+      description: Optional Discord, forum, or GitHub username. Avoid posting an email address.
+      placeholder: "@meshfriend on Discord"
+
+  - type: checkboxes
+    id: public
+    attributes:
+      label: Public submission
+      options:
+        - label: I understand this submission is public and contains no secrets or precise private location information.
+          required: true
