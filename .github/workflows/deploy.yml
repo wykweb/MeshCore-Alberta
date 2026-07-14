@@ -30,6 +30,9 @@ jobs:
         run: |
           pip install mkdocs-macros-plugin pyyaml mkdocs-glightbox pymdown-extensions
 
+      - name: Validate prototype catalog and onboarding
+        run: node scripts/validate-regions.js
+
       - name: Build MkDocs site
         run: mkdocs build --strict
 

@@ -81,6 +81,7 @@ nav:
 
   - Regions:
       - Overview: regions/index.md
+      - Region Standard: regions/standard.md
       - Set Up a Repeater: regions/setup.md
       - Map: regions/map.md
 

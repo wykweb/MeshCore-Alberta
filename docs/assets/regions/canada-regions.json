@@ -17,6 +17,15 @@
       "Other map areas are approximate and should be reviewed by local operators."
     ]
   },
+  "authority": {
+    "standard": "MCC-REG-1",
+    "version": "1.0-proposed",
+    "document": "../../regions/standard/",
+    "geographicModel": "exclusive-national-partition",
+    "topologyAtom": "Statistics Canada 2021 Dissemination Area",
+    "guardrail": "Statistics Canada SGC 2021 Economic Region",
+    "currentBoundaryStatus": "review-only"
+  },
   "meta": {
     "name": "MeshCore Canada Regions",
     "coverage": "Canada",
@@ -6567,6 +6576,54 @@
     "yyc": "cal",
     "yyj": "crd",
     "yyz": "tor"
+  },
+  "meshMapperReview": {
+    "yxx": {
+      "state": "quarantined",
+      "reason": "The 2026-07-12 source polygon is an extreme area outlier and must be refreshed or approved before use as a boundary anchor."
+    }
+  },
+  "routingOverlays": {
+    "ncr": {
+      "label": "National Capital Region",
+      "jurisdictions": [
+        "on",
+        "qc"
+      ],
+      "state": "migration-marker",
+      "active": false,
+      "migrationState": "legacy-dual-role",
+      "legacyHierarchyTag": "ncr"
+    },
+    "lloyd": {
+      "label": "Lloydminster shared scope",
+      "jurisdictions": [
+        "ab",
+        "sk"
+      ],
+      "state": "migration-marker",
+      "active": false,
+      "migrationState": "legacy-dual-role",
+      "legacyHierarchyTag": "lloyd"
+    },
+    "pnw": {
+      "label": "Pacific Northwest",
+      "jurisdictions": [
+        "bc"
+      ],
+      "state": "external-coordination",
+      "active": false,
+      "migrationState": "overlay-only"
+    },
+    "lo": {
+      "label": "Lake Ontario",
+      "jurisdictions": [
+        "on"
+      ],
+      "state": "discussion",
+      "active": false,
+      "migrationState": "overlay-only"
+    }
   },
   "profiles": {
     "ott": {

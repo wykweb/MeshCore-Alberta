@@ -41,7 +41,7 @@
       return Object.assign({}, seed, {
         tag: slug(seed.tag),
         sourceTier: "strategy",
-        boundaryType: "approximate"
+        boundaryType: "seed-radius"
       });
     });
     var strategyTagSet = {};
@@ -68,11 +68,13 @@
       return canonicalTag;
     }
 
+    var meshMapperReview = data.meshMapperReview || {};
     var normalizedFeatures = collection.features.map(function (feature) {
       var props = feature.properties || {};
       var rawTag = slug(props.tag || props.code);
       var rawCode = slug(props.code || props.tag);
       var tag = mappedTagFor(rawTag, rawCode);
+      var review = meshMapperReview[rawTag] || meshMapperReview[rawCode] || {};
       var center = props.center || [0, 0];
       data.regionAliases[tag] = unique((data.regionAliases[tag] || []).concat([
         tag,
@@ -97,7 +99,9 @@
           rawTag: rawTag,
           rawCode: rawCode,
           sourceTag: props.tag || props.code || "",
-          sourceCode: props.code || props.tag || ""
+          sourceCode: props.code || props.tag || "",
+          reviewState: review.state || "active",
+          reviewReason: review.reason || ""
         })
       });
       normalizedFeature.meshMapperSeed = {
@@ -108,11 +112,13 @@
         resolve: true,
         meshMapperFeature: normalizedFeature,
         sourceTier: "meshmapper",
-        boundaryType: "exact"
+        boundaryType: "source-polygon"
       };
       return normalizedFeature;
     });
-    var meshMapperSeeds = normalizedFeatures.map(function (feature) {
+    var meshMapperSeeds = normalizedFeatures.filter(function (feature) {
+      return feature.properties.reviewState !== "quarantined";
+    }).map(function (feature) {
       return feature.meshMapperSeed;
     });
     normalizedFeatures.forEach(function (feature) {
@@ -240,7 +246,17 @@
   }
 
   function statusFor(data, tag) {
-    return (data.status && data.status[tag]) || {
+    if (data.status && data.status[tag]) return data.status[tag];
+    var overlay = data.routingOverlays && data.routingOverlays[tag];
+    if (overlay) {
+      return {
+        state: overlay.active ? "active" : "proposal",
+        reviewer: "MeshCore Canada routing-overlay registry",
+        source: "MCC-REG-1 overlay registry",
+        basis: "routing-overlay"
+      };
+    }
+    return {
       state: "draft",
       reviewer: "Unreviewed",
       source: "Canada MeshCore Region Strategy draft v1.1.1"
@@ -262,7 +278,13 @@
   }
 
   function labelFor(data, tag) {
-    return data.hierarchy[tag] ? data.hierarchy[tag].label : tag;
+    if (data.hierarchy[tag]) return data.hierarchy[tag].label;
+    if (data.routingOverlays && data.routingOverlays[tag]) return data.routingOverlays[tag].label;
+    return tag;
+  }
+
+  function scopeExists(data, tag) {
+    return Boolean(data.hierarchy[tag] || data.routingOverlays && data.routingOverlays[tag]);
   }
 
   function parentFor(data, tag) {
@@ -339,7 +361,7 @@
     if (!host && window.location.pathname.indexOf(".html") !== -1) {
       return (page === "config" ? "config" : page) + ".html";
     }
-    var routes = { dashboard: "", config: "setup/", setup: "setup/", map: "map/" };
+    var routes = { dashboard: "", config: "setup/", setup: "setup/", map: "map/", standard: "standard/" };
     var root = host ? host.getAttribute("data-mcc-root") : "./";
     return new URL(routes[page] || "", new URL(root, document.baseURI)).href;
   }
@@ -365,9 +387,9 @@
     return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }
 
-  function rankSeeds(data, lat, lon) {
+  function rankSeeds(data, lat, lon, jurisdictionTag) {
     return data.seeds.filter(function (seed) {
-      return seed.resolve !== false;
+      return seed.resolve !== false && (!jurisdictionTag || provinceTagFor(data, seed.tag) === jurisdictionTag);
     }).map(function (seed) {
       var km = haversineKm(lat, lon, seed.lat, seed.lon);
       return {
@@ -419,8 +441,12 @@
     });
   }
 
-  function boundaryFeatureAt(data, lat, lon, forcedTag) {
+  function boundaryFeatureAt(data, lat, lon, forcedTag, jurisdictionTag) {
     var features = data.meshMapperRegions && data.meshMapperRegions.features || [];
+    features = features.filter(function (feature) {
+      if (feature.properties && feature.properties.reviewState === "quarantined") return false;
+      return !jurisdictionTag || provinceTagFor(data, feature.properties.tag) === jurisdictionTag;
+    });
     function distanceFromCenter(feature) {
       var center = feature.properties && feature.properties.center || [0, 0];
       return haversineKm(lat, lon, Number(center[1]), Number(center[0]));
@@ -445,8 +471,10 @@
     }));
   }
 
-  function strategyFallbackAt(data, lat, lon, forcedTag) {
-    var seeds = data.strategyFallbackSeeds || data.communityExtraSeeds || [];
+  function strategyFallbackAt(data, lat, lon, forcedTag, jurisdictionTag) {
+    var seeds = (data.strategyFallbackSeeds || data.communityExtraSeeds || []).filter(function (seed) {
+      return !jurisdictionTag || provinceTagFor(data, seed.tag) === jurisdictionTag;
+    });
     function rankedEntry(seed) {
       var km = haversineKm(lat, lon, seed.lat, seed.lon);
       return { seed: seed, km: km, score: km - (seed.r || 0), ancestry: ancestryFor(data, seed.tag) };
@@ -467,14 +495,14 @@
     return ranked[0] && withinCoverage(ranked[0]) ? ranked[0] : null;
   }
 
-  function resolveLocation(data, lat, lon, forcedTag) {
-    var ranked = rankSeeds(data, lat, lon);
-    var boundary = boundaryFeatureAt(data, lat, lon, forcedTag);
+  function resolveLocation(data, lat, lon, forcedTag, jurisdictionTag) {
+    var ranked = rankSeeds(data, lat, lon, jurisdictionTag);
+    var boundary = boundaryFeatureAt(data, lat, lon, forcedTag, jurisdictionTag);
     var boundaryTag = boundary ? String(boundary.properties.tag).toLowerCase() : null;
     var primary = boundaryTag
       ? ranked.find(function (entry) { return entry.seed.tag === boundaryTag; }) || null
       : null;
-    if (!primary) primary = strategyFallbackAt(data, lat, lon, forcedTag);
+    if (!primary) primary = strategyFallbackAt(data, lat, lon, forcedTag, jurisdictionTag);
     if (primary) {
       ranked = [primary].concat(ranked.filter(function (entry) { return entry.seed.tag !== primary.seed.tag; }));
     }
@@ -520,7 +548,11 @@
       additions.forEach(function (entry) {
         var additionalTag = slug(typeof entry === "string" ? entry : entry && entry.tag);
         var additionalParent = slug(entry && typeof entry === "object" && entry.parent || "");
-        if (!additionalTag || !data.hierarchy[additionalTag]) return;
+        if (!additionalTag || !scopeExists(data, additionalTag)) return;
+        if (!data.hierarchy[additionalTag] && !additionalParent) {
+          notes.push("Overlay " + additionalTag + " needs an explicit parent for this repeater.");
+          return;
+        }
         if (tags.indexOf(additionalTag) === -1) tags.push(additionalTag);
         if (additionalParent) parentOverrides[additionalTag] = additionalParent;
       });
@@ -1147,6 +1179,17 @@
     yt: "YT", yukon: "YT", "yukon-territory": "YT"
   };
 
+  function jurisdictionTagFromGeo(geo) {
+    var value = String(geo && geo.province || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    var code = CANADIAN_PROVINCE_CODES[value] || value;
+    return slug(code);
+  }
+
   function parseGeocoderCaHit(body, fallbackName) {
     var standard = body && body.standard || {};
     var lat = parseFloat(body && body.latt);
@@ -1184,6 +1227,16 @@
     });
     if (!matches.length) return null;
     var best = matches[0];
+    var tied = matches.filter(function (item) { return item.score === best.score; });
+    if (tied.length > 1) {
+      return {
+        ambiguous: true,
+        choices: tied.map(function (item) {
+          var province = provinceTagFor(data, item.seed.tag);
+          return labelFor(data, item.seed.tag) + (province ? ", " + province.toUpperCase() : "");
+        })
+      };
+    }
     var displayName = best.names.find(function (name) {
       return normalizeLocationSearch(name) === needle;
     }) || labelFor(data, best.seed.tag);
@@ -1194,6 +1247,7 @@
       name: [displayName, provinceTag && labelFor(data, provinceTag)].filter(Boolean).join(", "),
       countryCode: "ca",
       province: provinceTag && labelFor(data, provinceTag),
+      tag: best.seed.tag,
       exactLocalMatch: best.score <= 1
     };
   }
@@ -1247,6 +1301,9 @@
 
   function geocode(data, query) {
     var localMatch = localGeocode(data, query);
+    if (localMatch && localMatch.ambiguous) {
+      return Promise.reject(new Error("That name matches more than one region (" + localMatch.choices.join("; ") + "). Add a province or postal code."));
+    }
     if (localMatch && localMatch.exactLocalMatch) return Promise.resolve(localMatch);
     var postal = parseCanadianPostalCode(query);
     var primaryLookup = postal
@@ -1379,9 +1436,18 @@
       refreshIcons(target);
       return;
     }
+    if (rec.budget.tagCount > 32 || rec.budget.responseBytes > 172) {
+      target.innerHTML = '<div class="mcc-empty-state">' +
+        icon("triangle-alert") +
+        '<strong>Too many regions selected</strong>' +
+        '<span>This selection uses ' + esc(rec.budget.tagCount) + ' tags and ' + esc(rec.budget.responseBytes) + ' bytes. Remove regions until it fits the 32-tag and 172-byte limits.</span>' +
+        '</div>';
+      refreshIcons(target);
+      return;
+    }
     var firmware = state.firmware || data.meta.defaultFirmware || "1.16";
     var commands = buildCommands(data, rec.tags, firmware, state.includeBaseline, rec.parentOverrides);
-    var technicalCommands = commands.concat(["region dump"]);
+    var technicalCommands = commands.concat(["region"]);
     var titleTag = state.resolution.primary.seed.tag;
     var statusNotes = rec.notes.map(function (note) {
       var warning = note.indexOf("Check locally") === 0 || note.indexOf("Do not use") === 0 ||
@@ -1390,7 +1456,7 @@
     }).join("");
     var firmwareLabel = firmware === "1.16" ? "v1.16+" : firmware === "1.15" ? "v1.15.x" : "v1.14.x";
     var guided = state.finishPath === "guided";
-    var verificationCommands = ["region dump"];
+    var verificationCommands = ["region"];
     if (state.includeBaseline) verificationCommands.push("get radio");
     var resultBody = guided
       ? '<div class="mcc-guide-panel">' +
@@ -1438,7 +1504,7 @@
       '<h3 class="mcc-result-title"><code>' + esc(titleTag.toUpperCase()) + "</code> — " + esc(labelFor(data, titleTag)) + "</h3>" +
       '<div class="mcc-result-sub">' + esc(state.name || labelFor(data, titleTag)) + "</div>" +
       '<span class="mcc-source-tier mcc-source-tier-' + esc(state.resolution.sourceTier || "unknown") + '">' +
-      (state.resolution.sourceTier === "meshmapper" ? "MeshMapper boundary" : "Approximate area") + '</span>' +
+      (state.resolution.sourceTier === "meshmapper" ? "MeshMapper source polygon" : "Approximate area") + '</span>' +
       '</div>' +
       (!guided ? '<button type="button" class="mcc-button mcc-copy-all">' + icon("copy") + 'Copy commands</button>' : '') +
       '</div>' +
@@ -1492,6 +1558,7 @@
     if (!state || !state.canGenerate || !state.resolution) return null;
     var rec = recommend(data, state.resolution, state.type, state.selectedMetros);
     if (!rec) return null;
+    if (rec.budget.tagCount > 32 || rec.budget.responseBytes > 172) return null;
     var firmware = state.firmware || data.meta.defaultFirmware || "1.16";
     return buildCommands(data, rec.tags, firmware, state.includeBaseline, rec.parentOverrides);
   }
@@ -1622,7 +1689,7 @@
       return;
     }
     if (state.canGenerate) {
-      state.resolution = resolveLocation(data, state.lat, state.lon, state.forcedTag);
+      state.resolution = resolveLocation(data, state.lat, state.lon, state.forcedTag, state.jurisdictionTag);
       if (state.resolution && state.resolution.primary) {
         state.detailTag = state.resolution.primary.seed.tag;
       }
@@ -1716,6 +1783,7 @@
       lon: null,
       name: "",
       forcedTag: null,
+      jurisdictionTag: null,
       type: "residential",
       firmware: data.meta.defaultFirmware || "1.16",
       includeBaseline: true,
@@ -1804,7 +1872,10 @@
       state.lat = geo.lat;
       state.lon = geo.lon;
       state.name = geo.name;
-      state.forcedTag = null;
+      state.forcedTag = geo.tag || null;
+      state.jurisdictionTag = state.forcedTag
+        ? provinceTagFor(data, state.forcedTag)
+        : jurisdictionTagFromGeo(geo);
       state.selectedMetros = [];
       if (!isCanada(geo)) {
         state.canGenerate = false;
@@ -1812,7 +1883,7 @@
         refreshTool(data, els, state);
         return;
       }
-      state.resolution = resolveLocation(data, state.lat, state.lon);
+      state.resolution = resolveLocation(data, state.lat, state.lon, state.forcedTag, state.jurisdictionTag);
       if (!state.resolution.hasMatch) {
         state.canGenerate = false;
         setStatus(els.status, "No region found here. Try a nearby city.", "warning");
@@ -1934,7 +2005,7 @@
       '<aside class="mcc-map-panel">' +
       '<div class="mcc-panel-header">' +
       '<h2>Find a region</h2>' +
-      '<p>MeshMapper boundaries take priority. Other areas are approximate.</p>' +
+      '<p>MeshMapper anchors are shown where available. Other areas are approximate until the complete national boundary release.</p>' +
       '<a class="mcc-button mcc-button-secondary" href="' + esc(regionPageHref("config")) + '">' + icon("list-checks") + 'Setup</a>' +
       '</div>' +
       '<section class="mcc-card mcc-card-compact">' +
@@ -1974,6 +2045,7 @@
       lon: null,
       name: "",
       forcedTag: null,
+      jurisdictionTag: null,
       type: "residential",
       firmware: data.meta.defaultFirmware || "1.16",
       includeBaseline: true,
@@ -2050,15 +2122,19 @@
 
       var fillLayer = L.geoJSON(data.meshMapperRegions, {
         style: function (feature) {
+          var quarantined = feature.properties.reviewState === "quarantined";
           return {
             color: "transparent",
             weight: 0,
             fillColor: colorForTag(feature.properties.tag),
-            fillOpacity: 0.2
+            fillOpacity: quarantined ? 0.04 : 0.2
           };
         },
         onEachFeature: function (feature, layer) {
-          layer.bindTooltip('<strong>' + esc(feature.properties.code) + '</strong> - ' + esc(feature.properties.name));
+          var reviewNote = feature.properties.reviewState === "quarantined"
+            ? '<br><small>Source polygon quarantined — using the approximate strategy area</small>'
+            : '';
+          layer.bindTooltip('<strong>' + esc(feature.properties.code) + '</strong> - ' + esc(feature.properties.name) + reviewNote);
           layer.on("click", function (event) {
             if (event.originalEvent) L.DomEvent.stopPropagation(event.originalEvent);
             useGeo({
@@ -2072,7 +2148,16 @@
       });
       var borderLayer = L.geoJSON(data.meshMapperRegions, {
         interactive: false,
-        style: { color: "#aeb8ff", opacity: 0.9, weight: 1.5, fill: false }
+        style: function (feature) {
+          var quarantined = feature.properties.reviewState === "quarantined";
+          return {
+            color: quarantined ? "#f4b860" : "#aeb8ff",
+            opacity: quarantined ? 0.75 : 0.9,
+            weight: 1.5,
+            dashArray: quarantined ? "5 5" : null,
+            fill: false
+          };
+        }
       });
       var unifiedRegionLayer = L.layerGroup([communityLayer, fillLayer, borderLayer]).addTo(map);
       var selectedLayer = L.geoJSON(null, {
@@ -2125,7 +2210,10 @@
         state.lat = Number(geo.lat);
         state.lon = Number(geo.lon);
         state.name = geo.name || (state.lat.toFixed(4) + ", " + state.lon.toFixed(4));
-        state.forcedTag = forcedTag || null;
+        state.forcedTag = forcedTag || geo.tag || null;
+        state.jurisdictionTag = state.forcedTag
+          ? provinceTagFor(data, state.forcedTag)
+          : jurisdictionTagFromGeo(geo);
         state.selectedMetros = [];
         place(state.lat, state.lon);
         if (!isCanada(geo)) {
@@ -2135,7 +2223,7 @@
           state.resolution = null;
           setStatus(els.status, "That point appears to be outside Canada.", "warning");
         } else {
-          state.resolution = resolveLocation(data, state.lat, state.lon, state.forcedTag);
+          state.resolution = resolveLocation(data, state.lat, state.lon, state.forcedTag, state.jurisdictionTag);
           state.canGenerate = state.resolution.hasMatch;
           state.detailTag = state.canGenerate ? state.resolution.primary.seed.tag : null;
           if (state.canGenerate) {
@@ -2172,6 +2260,7 @@
         state.lon = Number(lon);
         state.name = name || (state.lat.toFixed(4) + ", " + state.lon.toFixed(4));
         state.forcedTag = null;
+        state.jurisdictionTag = null;
         state.selectedMetros = [];
         state.canGenerate = false;
         state.resolution = null;
@@ -2277,7 +2366,7 @@
         reviewer: st.reviewer || "",
         seed: seedText(seed),
         sourceTier: hasMeshMapperBoundary ? "meshmapper" : "strategy",
-        boundaryType: hasMeshMapperBoundary ? "exact" : "approximate",
+        boundaryType: hasMeshMapperBoundary ? "source-polygon" : "seed-radius",
         basis: st.basis || item.basis || "proposed"
       };
     });
@@ -2321,7 +2410,7 @@
         return "<tr>" +
           '<td><code>' + esc(row.tag) + "</code> " + esc(row.label) + "</td>" +
           "<td>" + esc(row.province ? labelFor(data, row.province) : "Canada") + "</td>" +
-          "<td>" + (row.boundaryType === "exact" ? "MeshMapper" : "Approx.") + "</td>" +
+          "<td>" + (row.boundaryType === "source-polygon" ? "MeshMapper" : "Approx.") + "</td>" +
           "<td>" + (row.basis === "established" ? "Established" : "Proposed") + "</td>" +
           "</tr>";
       }).join("");
@@ -2336,15 +2425,16 @@
     el.innerHTML =
       '<div class="mcc-dashboard">' +
       '<section class="mcc-console-header mcc-dashboard-header">' +
-      '<h2>Canadian regions — Draft v1.1.1</h2>' +
+      '<h2>Canadian regions — review map</h2>' +
       '<div class="mcc-dashboard-actions">' +
       '<a class="mcc-action-button" href="' + esc(regionPageHref("config")) + '">' + icon("list-checks") + '<span><strong>Setup</strong></span></a>' +
       '<a class="mcc-action-button" href="' + esc(regionPageHref("map")) + '">' + icon("map") + '<span><strong>Map</strong></span></a>' +
+      '<a class="mcc-action-button" href="' + esc(regionPageHref("standard")) + '">' + icon("book-open-check") + '<span><strong>Standard</strong></span></a>' +
       '</div>' +
       '</section>' +
       '<section class="mcc-stat-grid" aria-label="Region status summary">' +
       '<div class="mcc-stat"><span>Regions</span><strong>' + data.regionCounts.total + '</strong></div>' +
-      '<div class="mcc-stat"><span>MeshMapper boundaries</span><strong>' + data.regionCounts.meshMapper + '</strong></div>' +
+      '<div class="mcc-stat"><span>MeshMapper polygons</span><strong>' + data.regionCounts.meshMapper + '</strong></div>' +
       '<div class="mcc-stat"><span>Provinces &amp; territories</span><strong>' + provinceOptions(data).length + '</strong></div>' +
       '</section>' +
       '<section class="mcc-card mcc-dashboard-table">' +

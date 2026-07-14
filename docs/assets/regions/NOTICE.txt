@@ -33,3 +33,17 @@ https://creativecommons.org/licenses/by/4.0/
 Third-party boundary data remains subject to its source licences and
 attribution requirements. It is not relicensed under this repository's MIT
 licence.
+
+MCC-REG-1 authority sources
+---------------------------
+
+The region definition and authority standard specifies Statistics Canada 2021
+Dissemination Areas as the topology units and 2021 Economic Regions as broad
+generation guardrails. No Statistics Canada boundary file is included in this
+snapshot. A future generated release must lock and attribute its exact inputs.
+
+Statistics Canada source information and Open Licence:
+
+https://www150.statcan.gc.ca/n1/pub/92-160-g/92-160-g2021001-eng.htm
+https://www.statcan.gc.ca/en/subjects/standard/sgc/2021/er-additionalinfo
+https://www.statcan.gc.ca/en/terms-conditions/open-licence
