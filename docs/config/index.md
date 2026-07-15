@@ -1,6 +1,7 @@
 ---
 title: Set up repeater regions
 hide:
+  - navigation
   - toc
 ---
 # Set up repeater regions
