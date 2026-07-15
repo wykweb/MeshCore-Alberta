@@ -31,6 +31,11 @@ jobs:
           python scripts/verify-region-geometry.py
           python scripts/verify-region-geometry.py --partition docs/assets/regions/canada-region-partition-digital.geojson
 
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
       - name: Validate region editor
         run: |
           node --test tests/editor/validate.test.mjs

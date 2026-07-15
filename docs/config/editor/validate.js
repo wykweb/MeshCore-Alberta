@@ -1,5 +1,5 @@
-// Browser-side port of the proposal validation performed by
-// scripts/validate-region-proposal.py.
+// Browser port of region editor export validation; scripts/validate-region-proposal.py
+// is the authoritative maintainer-side check.
 //
 // This module has no Node-only or browser-only dependencies: it uses only
 // standard JS (RegExp, Map, Set, JSON) so it can run unmodified in a
