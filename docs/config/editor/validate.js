@@ -1,5 +1,5 @@
 // Browser-side port of the proposal validation performed by
-// tools/region-editor/server.py `RegionEditorApp.export_proposal`.
+// scripts/validate-region-proposal.py.
 //
 // This module has no Node-only or browser-only dependencies: it uses only
 // standard JS (RegExp, Map, Set, JSON) so it can run unmodified in a

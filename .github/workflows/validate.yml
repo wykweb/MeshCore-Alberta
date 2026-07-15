@@ -33,8 +33,8 @@ jobs:
 
       - name: Validate region editor
         run: |
-          python -m unittest discover -s tools/region-editor/tests -v
-          node --check tools/region-editor/static/app.js
+          node --test tests/editor/validate.test.mjs
+          node --check docs/config/editor/app.js
 
       - name: Build documentation
         run: mkdocs build --strict

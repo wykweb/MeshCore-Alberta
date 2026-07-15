@@ -315,7 +315,9 @@ The national maintainers enforce the data model; they do not invent local identi
 
 The boundary editor works on the same census cells as the generator. Its normal action reassigns a whole CSD, with its containing CD shown as review context. It never saves a freehand polygon as operational geometry. A reviewer may use DA-level draft edits to shape an exceptional split, but the approved `splitExceptions` record must expand that draft to list every DA in the CSD, with no duplicate or missing DGUID.
 
-Signing in to the editor controls access to the test tool; it does not grant approval authority. The editor exports a versioned proposal with the base membership hash and before/after owner for each changed DGUID. The proposal validator adds CD/CSD context and requires a reason before review; an author may also be recorded. A maintainer must review and merge the resulting decision into `municipal-overrides.json`, regenerate all artifacts, and pass the release checks before the public boundary changes. Editor drafts and browser-local state are never authoritative.
+The editor is a static page at `/config/editor/`, served with the rest of this site with no account and no server-side component. It exports a versioned proposal with the base membership hash and before/after owner for each changed DGUID. Boundary proposals are drafted in the static editor and validated by maintainers with `scripts/validate-region-proposal.py`, which adds CD/CSD context and requires a reason before review; an author may also be recorded. A maintainer must review and merge the resulting decision into `municipal-overrides.json`, regenerate all artifacts, and pass the release checks before the public boundary changes. Editor drafts and browser-local state are never authoritative.
+
+The editor's own census-cell geometry (`docs/assets/regions/cells/`) was last regenerated with `scripts/build-region-editor-data.py --retain 10%` rather than the script's 8% default, because 8% collapses a BC dissemination area to a degenerate shape; the retained value is recorded alongside the rest of the build inputs in `docs/assets/regions/cells/manifest.json`.
 
 Versioning rules:
 
