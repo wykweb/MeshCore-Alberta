@@ -23,6 +23,15 @@ jobs:
       - name: Validate anonymous proposal gateway
         run: python -m unittest discover -s tools/region-proposal-gateway/tests -v
 
+      - name: Enforce MeshCore Canada production ownership
+        shell: bash
+        run: |
+          if git grep -n -E 'canadaverse\.org|192\.168\.0\.111|/home/neonx|splashpage' -- \
+            docs/config/editor tools/region-proposal-gateway; then
+            echo 'Production editor and proposal-service files must reference only MeshCore Canada infrastructure.' >&2
+            exit 1
+          fi
+
       - name: Install documentation dependencies
         run: pip install mkdocs-material mkdocs-macros-plugin pyyaml mkdocs-glightbox pymdown-extensions shapely==2.0.6 mkdocs-redirects==1.2.2
 

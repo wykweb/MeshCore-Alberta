@@ -30,6 +30,19 @@ jobs:
         run: |
           pip install mkdocs-macros-plugin pyyaml mkdocs-glightbox pymdown-extensions shapely==2.0.6 mkdocs-redirects==1.2.2
 
+      - name: Validate MeshCore Canada proposal service
+        shell: bash
+        run: |
+          python -m unittest discover -s tools/region-proposal-gateway/tests -v
+          node --test tests/editor/*.test.mjs
+          node --check docs/config/editor/app.js
+          node --check docs/config/editor/issue.js
+          if git grep -n -E 'canadaverse\.org|192\.168\.0\.111|/home/neonx|splashpage' -- \
+            docs/config/editor tools/region-proposal-gateway; then
+            echo 'Production editor and proposal-service files must reference only MeshCore Canada infrastructure.' >&2
+            exit 1
+          fi
+
       - name: Validate exclusive national partition
         run: node scripts/validate-regions.js
 

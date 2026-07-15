@@ -1,22 +1,21 @@
-# Merge these routes/directives into the existing canadaverse.org site block.
-# The API route must be handled before the static splashpage file server.
+# Add this site block to Caddy on the MeshCore Canada production host.
+# Point regions-api.meshcore.ca at that host before reloading Caddy. Caddy will
+# obtain and renew the public TLS certificate when ports 80 and 443 are open.
 
-# The live cloudflared container uses host networking, and its origin
-# connections reach Caddy from the Pi's own 192.168.0.111 address. Preserve
-# this route order: LAN clients that are not the local cloudflared peer get 403.
-route /api/meshcore-regions/proposals* {
-    @cloudflared_peer remote_ip 192.168.0.111
-    reverse_proxy @cloudflared_peer region-proposal-gateway:8787 {
-        # Never pass a browser-supplied forwarding chain. Only the verified
-        # cloudflared ingress may supply CF-Connecting-IP.
-        header_up -X-Forwarded-For
-        header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
-    }
-    respond "Forbidden" 403
+regions-api.meshcore.ca {
+	@proposal_api {
+		path /api/meshcore-regions/proposals /api/meshcore-regions/proposals/*
+	}
+
+	handle @proposal_api {
+		# The container uses host networking and listens on loopback only.
+		# Caddy ignores browser-supplied X-Forwarded-For by default and sends
+		# the real direct client address to the proposal service.
+		reverse_proxy 127.0.0.1:8787
+	}
+
+	respond "Not found" 404
 }
 
-# Edit the site's EXISTING global Content-Security-Policy line; do not add a
-# second CSP header. Preserve every current host/directive, and add:
-#   script-src:  https://challenges.cloudflare.com
-#   frame-src:   https://challenges.cloudflare.com
-#   connect-src: https://challenges.cloudflare.com
+# If the GitHub Pages editor later adds a Content-Security-Policy, it must allow
+# https://challenges.cloudflare.com in script-src, frame-src, and connect-src.

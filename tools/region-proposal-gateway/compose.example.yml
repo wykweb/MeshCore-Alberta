@@ -1,16 +1,10 @@
-services:
-  # Extend the existing service so Caddy has one private path to the gateway.
-  splashpage:
-    networks:
-      tunnel:
-      region_proposal_private:
-        ipv4_address: 172.30.255.2
+name: meshcore-region-proposals
 
+services:
   region-proposal-gateway:
     build:
-      # Loaded after /home/neonx/splashpage/docker-compose.yml.
-      context: ./region-proposal-gateway
-    image: meshcore-canada/region-proposal-gateway:local
+      context: .
+    image: "meshcore-canada/region-proposal-gateway:${REGION_PROPOSAL_IMAGE_TAG:-local}"
     restart: unless-stopped
     read_only: true
     init: true
@@ -19,27 +13,27 @@ services:
     security_opt:
       - no-new-privileges:true
     pids_limit: 64
-    mem_limit: 256m
+    mem_limit: 384m
     cpus: 1.0
+    stop_grace_period: 20s
     tmpfs:
       - /tmp:size=16m,noexec,nosuid,nodev
-    expose:
-      # Caddy is the only caller, over the dedicated private network.
-      - "8787"
+    # The MeshCore Canada host's Caddy service reaches the API only on loopback.
+    network_mode: host
     environment:
-      LISTEN_HOST: 0.0.0.0
+      LISTEN_HOST: 127.0.0.1
       PORT: "8787"
       BASE_PATH: /api/meshcore-regions/proposals
-      ALLOWED_ORIGINS: https://canadaverse.org,https://meshcore.ca,https://config.meshcore.ca
-      TURNSTILE_SITE_KEY: replace-with-public-site-key
-      TURNSTILE_EXPECTED_HOSTNAMES: canadaverse.org,meshcore.ca,config.meshcore.ca
+      ALLOWED_ORIGINS: https://meshcore.ca,https://config.meshcore.ca
+      TURNSTILE_SITE_KEY: "${TURNSTILE_SITE_KEY:?Set TURNSTILE_SITE_KEY in the protected environment file}"
+      TURNSTILE_EXPECTED_HOSTNAMES: meshcore.ca,config.meshcore.ca
       TURNSTILE_SECRET_FILE: /run/secrets/turnstile
-      GITHUB_APP_CLIENT_ID: Iv1.replace-me
-      GITHUB_APP_INSTALLATION_ID: "12345678"
+      GITHUB_APP_CLIENT_ID: "${GITHUB_APP_CLIENT_ID:?Set GITHUB_APP_CLIENT_ID in the protected environment file}"
+      GITHUB_APP_INSTALLATION_ID: "${GITHUB_APP_INSTALLATION_ID:?Set GITHUB_APP_INSTALLATION_ID in the protected environment file}"
       GITHUB_APP_PRIVATE_KEY_FILE: /run/secrets/github-app.pem
       MEMBERSHIP_PATH: /data/regions/canada-region-membership.csv
       CATALOG_PATH: /data/regions/canada-regions.json
-      CELLS_DIR: /data/cells
+      CELLS_DIR: /data/regions/cells
       LEDGER_PATH: /state/proposals.sqlite3
       RATE_LIMIT: "5"
       RATE_WINDOW_SECONDS: "3600"
@@ -48,26 +42,34 @@ services:
       GLOBAL_PRE_RATE_LIMIT: "300"
       GLOBAL_PRE_RATE_WINDOW_SECONDS: "60"
       MAX_WORKERS: "32"
-      # Only the fixed splashpage/Caddy address may supply X-Forwarded-For.
-      TRUSTED_PROXY_CIDRS: 172.30.255.2/32
+      # Only the local Caddy process may supply one X-Forwarded-For value.
+      TRUSTED_PROXY_CIDRS: 127.0.0.1/32
     volumes:
-      # Live splashpage assets described by the Pi deployment.
-      - ./debug/meshcore-regions/assets:/data/regions:ro
-      - ./region-editor-data:/data/cells:ro
-      - ./region-proposal-state:/state
-      - ./secrets/turnstile:/run/secrets/turnstile:ro
-      - ./secrets/github-app.pem:/run/secrets/github-app.pem:ro
-    networks:
-      region_proposal_private:
-        ipv4_address: 172.30.255.3
-      region_proposal_egress:
-
-networks:
-  tunnel:
-    external: true
-  region_proposal_private:
-    internal: true
-    ipam:
-      config:
-        - subnet: 172.30.255.0/29
-  region_proposal_egress:
+      - type: bind
+        source: "${MCC_REPO_ROOT:?Set MCC_REPO_ROOT to the absolute repository checkout}/docs/assets/regions"
+        target: /data/regions
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: "${REGION_PROPOSAL_STATE_DIR:-/var/lib/meshcore-region-proposals}"
+        target: /state
+        bind:
+          create_host_path: false
+      - type: bind
+        source: "${REGION_PROPOSAL_SECRET_DIR:-/etc/meshcore-region-proposals}/turnstile"
+        target: /run/secrets/turnstile
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: "${REGION_PROPOSAL_SECRET_DIR:-/etc/meshcore-region-proposals}/github-app.pem"
+        target: /run/secrets/github-app.pem
+        read_only: true
+        bind:
+          create_host_path: false
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

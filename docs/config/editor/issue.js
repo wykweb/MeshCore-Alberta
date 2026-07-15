@@ -1,4 +1,4 @@
-export const DEFAULT_SUBMISSION_ENDPOINT = "https://canadaverse.org/api/meshcore-regions/proposals";
+export const DEFAULT_SUBMISSION_ENDPOINT = "https://regions-api.meshcore.ca/api/meshcore-regions/proposals";
 export const SUBMISSION_CONTRACT_VERSION = 1;
 export const TURNSTILE_SCRIPT_URL = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 export const MAX_SUBMISSION_BYTES = 2 * 1024 * 1024;

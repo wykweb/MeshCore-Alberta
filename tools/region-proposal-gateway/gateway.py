@@ -980,7 +980,7 @@ class GatewayService:
             raise GatewayError(400, "turnstile_failed", "Human verification is required.")
         rate_key = hmac.new(self._ip_salt, client_ip.encode("ascii"), hashlib.sha256).hexdigest()
         # Higher pre-verification bounds prevent forged Origin requests from
-        # turning the Pi into an unlimited Siteverify client.  They are kept
+        # turning the service into an unlimited Siteverify client. They are kept
         # separate from the low verified-proposal quota below.
         if self.pre_rate_limiter:
             self.pre_rate_limiter.check(rate_key)

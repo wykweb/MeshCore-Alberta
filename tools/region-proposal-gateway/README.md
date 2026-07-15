@@ -1,13 +1,18 @@
-# Anonymous region proposal gateway
+# Anonymous region proposal service
 
-This is the small server-side component that lets a contributor submit a
-validated editor proposal without a GitHub account. It is designed for the Pi
-behind `canadaverse.org` and uses only the Python standard library plus the
-`openssl` executable.
+This server-side service lets a contributor submit a validated boundary
+proposal without a GitHub account. Production is designed to run on a MeshCore
+Canada-managed Linux host at
+`https://regions-api.meshcore.ca/api/meshcore-regions/proposals`. The static
+editor, DNS, host, GitHub App, Turnstile widget, secrets, and issue repository
+all remain under MeshCore Canada administration.
 
-The gateway does **not** edit region data. It opens a fixed-format issue in
+The service does **not** edit region data. It opens a fixed-format issue in
 `MeshCore-ca/MeshCore-Canada` with the fixed `enhancement` label. Maintainers
 still review and apply accepted changes through the repository workflow.
+
+See the repository-root [`instructions.md`](../../instructions.md) for the
+one-time administrator activation checklist and recommended merge order.
 
 ## Browser contract
 
@@ -20,158 +25,163 @@ The default base path is `/api/meshcore-regions/proposals`.
 - Success returns
   `{"ok":true,"issueNumber":123,"issueUrl":"https://github.com/...","proposalSha256":"...","duplicate":false}`.
 
-`website` is a honeypot and must be the empty string. POST requests require an
-exact allowlisted `Origin`; there is no wildcard or credentialed CORS. A
-same-origin config GET may omit `Origin`. The service handles strict OPTIONS
-preflights.
+`website` is a honeypot and must be empty. POST requests require an exact
+allowlisted `Origin`; there is no wildcard or credentialed CORS. A same-origin
+config GET may omit `Origin`. The service handles strict OPTIONS preflights.
 
 `proposalSha256` is the SHA-256 of UTF-8 JSON produced recursively with sorted
-object keys, no ASCII escaping, and separators `,` and `:` (no trailing
-newline). This gives the browser an exact value to verify before it displays the
-created issue.
+object keys, no ASCII escaping, and separators `,` and `:` with no trailing
+newline. The browser verifies this exact value before displaying the issue.
 
 ## What is validated
 
-On every request the gateway checks whether any mounted authority file changed.
-It reloads atomically when file name, size, nanosecond mtime, or inode changes.
-The current membership CSV is hashed again during reload.
-
-Startup and reload both fail closed unless all of the following hold:
+On every request the service checks whether any mounted authority file changed
+and reloads it atomically. Startup and reload fail closed unless:
 
 - the catalog hierarchy is valid and every leaf has one jurisdiction;
-- the membership CSV has unique DGUIDs and only valid same-jurisdiction leaves;
-- the complete set of `cells-<PRUID>.topo.json` files matches membership;
+- the membership CSV has unique DGUIDs and valid same-jurisdiction leaves;
+- every `cells-<PRUID>.topo.json` file matches the membership table;
 - every TopoJSON DGUID, PRUID, and `leaf_tag` agrees with membership;
-- every catalog leaf has exactly one matching `seed_tag` anchor;
-- the proposal base hash is current, all `from` values are current, targets are
-  valid same-province leaves, and no anchor is moved;
-- a proposal changes one province, contains no duplicate/no-op cells, contains
-  at most 25,000 changes, and the complete HTTP body is at most 2 MiB.
+- every catalog leaf has exactly one matching anchor;
+- the proposal base hash and all `from` values are current;
+- all target leaves are valid and in the same province or territory;
+- no anchor moves; and
+- request, proposal, and changed-cell limits are respected.
 
 Contributor text is normalized to one line. Structural Markdown is escaped,
-GitHub mentions are neutralized, and the exact canonical JSON uses a dynamic
-code fence that user text cannot close.
+GitHub mentions are neutralized, and canonical JSON uses a dynamic code fence
+that contributor text cannot close.
 
-## GitHub App setup
+## GitHub App
 
-Create a GitHub App owned by the organization with only:
+The organization-owned App must have only:
 
 - Repository permission: **Issues — Read and write**
 - No Contents permission
-- No webhook required
+- No webhook
 
-Install it on **only** `MeshCore-ca/MeshCore-Canada`. Record its client ID and
-installation ID, and download a private key. The gateway signs a short-lived
-RS256 JWT (`iat` 60 seconds in the past, `exp` nine minutes in the future) with
-`openssl`. It asks GitHub for an installation token restricted again to the
-single repository and `issues: write`, then verifies the returned repository
-and permission scope before using it. API requests use GitHub's
-`2026-03-10` version header. No token or private key is sent to the browser.
+Install it on **only** `MeshCore-ca/MeshCore-Canada`. The service signs a
+short-lived RS256 JWT with `openssl`, requests an installation token restricted
+again to that repository and `issues: write`, and verifies the returned scope.
+No token or private key is sent to the browser.
 
-There is no Contents API call and no undocumented attachment API. Small
-canonical proposals are inline in the issue. Large proposals are deterministic
-gzip data split into base64url issue-comment chunks (padding omitted). On a
-retry, existing chunks are listed and only missing chunks are posted, with at
-least one second between comment writes.
+There is no Contents API call or undocumented attachment API. Small proposals
+are inline in the issue. Large proposals use deterministic gzip data split into
+base64url issue-comment chunks. Retries resume only missing chunks.
 
 ## Turnstile and abuse controls
 
-Create a Cloudflare Turnstile widget for the exact production hostnames. The
-backend verifies `success`, exact `hostname`, and action `region_proposal` at
-Siteverify. Tokens longer than 2,048 characters are rejected. The primary
-per-IP limit defaults to five successful-human-verification attempts per hour;
-failed Turnstile tokens do not consume that low shared-NAT quota. A separate
-higher pre-verification bound defaults to 30 attempts per IP per five minutes,
-plus 300 total attempts per minute, so invalid tokens cannot cause unlimited
-Siteverify traffic.
+Create the Turnstile widget in a MeshCore Canada-controlled account for the
+editor hostnames `meshcore.ca` and `config.meshcore.ca`. The service verifies
+`success`, exact hostname, and action `region_proposal` at Siteverify. Tokens
+are single-use and bounded to 2,048 characters.
 
-The gateway trusts forwarding headers only when its TCP peer is inside
-`TRUSTED_PROXY_CIDRS`, which must contain private/loopback networks. The live
-cloudflared container uses host networking; its connections reach Caddy from
-the Pi's own `192.168.0.111` address. The Caddy route accepts the proposal API
-only from that fixed local peer, rejects other LAN clients, deletes any
-browser-supplied `X-Forwarded-For`, and replaces it with Cloudflare's verified
-`CF-Connecting-IP`. If the tunnel networking changes, verify and update that
-peer matcher before reloading Caddy. In the current Pi layout Caddy runs inside
-`splashpage`, so the compose override adds a dedicated internal network where
-it reaches `region-proposal-gateway:8787`; `127.0.0.1:8787` would incorrectly
-point back to the Caddy container itself.
-The gateway is not attached to the general `tunnel` network. A separate bridge
-provides outbound GitHub/Turnstile access, and only the fixed Caddy `/32` is
-trusted to supply one overwritten forwarding address (chains are rejected).
+The default verified limit is five attempts per IP per hour. Separate higher
+pre-verification and global bounds prevent invalid tokens from creating
+unlimited Siteverify traffic. Caddy is the only trusted proxy and is reached on
+loopback. The service accepts exactly one forwarded client address from that
+trusted peer; all other peers are treated as direct clients.
 
-Turnstile also requires the editor CSP to include
-`https://challenges.cloudflare.com` in **script-src**, **frame-src**, and
-**connect-src**. Edit the existing global CSP line to add those hosts. Do not
-add a second CSP header, and do not drop the existing tile/geocoder hosts.
+If the GitHub Pages editor later adds a Content-Security-Policy, it must allow
+`https://challenges.cloudflare.com` in `script-src`, `frame-src`, and
+`connect-src` while preserving all existing tile and geocoder hosts.
 
-## Pi deployment
+## Production deployment model
 
-Copy this directory to
-`/home/neonx/splashpage/region-proposal-gateway`, beside the existing
-splashpage paths, then prepare state and secret files. The container runs as UID/GID 10001 and rejects secret files
-that are symlinks or readable/writable by group or other users.
+The supplied files assume:
+
+- a MeshCore Canada-owned Linux host with Docker Engine and Compose;
+- Caddy running directly on that host;
+- DNS for `regions-api.meshcore.ca` pointing to the host;
+- the repository checked out at `/opt/meshcore-region-proposals`;
+- state at `/var/lib/meshcore-region-proposals`; and
+- protected configuration at `/etc/meshcore-region-proposals`.
+
+The host clock must be synchronized for GitHub App JWTs. Outbound HTTPS must
+reach `api.github.com`, `challenges.cloudflare.com`, and Caddy's ACME provider.
+Confirm that loopback port 8787 is unused before starting the service.
+
+`compose.example.yml` is standalone. It uses Linux host networking so the
+non-root container can bind `127.0.0.1:8787`, which is never exposed directly
+to the Internet. `Caddyfile.example` is the public TLS entry point. The
+container has a read-only root filesystem, dropped capabilities, resource and
+log bounds, read-only authority/secret mounts, and one writable ledger mount.
+
+Copy `environment.example` to the protected configuration directory and set
+the public/non-secret IDs. Keep the Turnstile secret and GitHub App PEM as
+separate mode-`0600` files owned by UID/GID 10001.
+
+Typical lifecycle commands, run from
+`/opt/meshcore-region-proposals/tools/region-proposal-gateway`, are:
 
 ```sh
-mkdir -p secrets region-proposal-state
-printf '%s' 'TURNSTILE-SECRET-HERE' > secrets/turnstile
-cp /safe/download/location/meshcore-region-app.private-key.pem secrets/github-app.pem
-sudo chown -R 10001:10001 secrets region-proposal-state
-chmod 600 secrets/turnstile secrets/github-app.pem
-chmod 700 secrets region-proposal-state
-docker compose -f docker-compose.yml -f region-proposal-gateway/compose.example.yml build region-proposal-gateway
-docker compose -f docker-compose.yml -f region-proposal-gateway/compose.example.yml up -d region-proposal-gateway splashpage
-docker compose -f docker-compose.yml -f region-proposal-gateway/compose.example.yml ps
-docker compose -f docker-compose.yml -f region-proposal-gateway/compose.example.yml exec region-proposal-gateway \
-  python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8787/healthz', timeout=3).read()"
+sudo docker compose \
+  --env-file /etc/meshcore-region-proposals/environment \
+  -f compose.example.yml config
+sudo docker compose \
+  --env-file /etc/meshcore-region-proposals/environment \
+  -f compose.example.yml up -d --build
+sudo docker compose \
+  --env-file /etc/meshcore-region-proposals/environment \
+  -f compose.example.yml ps
+curl -fsS http://127.0.0.1:8787/healthz
 ```
 
-The example mounts the current Pi layout:
+Validate and reload Caddy only after the loopback health check passes. Then
+verify the public configuration and exact CORS response:
 
-- `./debug/meshcore-regions/assets` for membership and catalog;
-- `./region-editor-data` for the per-province TopoJSON files;
-- `./region-proposal-state` as the writable SQLite ledger.
-
-The override paths are relative to `/home/neonx/splashpage`, because the main
-compose file is listed first. Alternatively, merge the example service into
-that main compose file. Adjust only the host sides of mounts if the live
-directories differ. Authority mounts and secret mounts stay read-only. The container root
-filesystem is read-only and all Linux capabilities are dropped.
+```sh
+curl -fsS \
+  https://regions-api.meshcore.ca/api/meshcore-regions/proposals/config
+curl -si \
+  -H 'Origin: https://meshcore.ca' \
+  https://regions-api.meshcore.ca/api/meshcore-regions/proposals/config
+```
 
 ## Idempotency and ledger recovery
 
-The canonical proposal hash is the idempotency key. The gateway signs
-`mcc-region-proposal/v1:<hash>` with the GitHub App RSA key and embeds that
-RS256 signature beside the hash. Recovery accepts a search result only when
-both markers match, so a public user cannot counterfeit an idempotency issue.
-Before creating an issue, the gateway searches for those fixed markers and writes a durable `pending`
-ledger row. Immediately after GitHub returns `201`, it stores the exact issue
-number and URL before posting any chunks. A retry with a `created` row resumes
-chunks. A retry with only a `pending` row searches GitHub and fails closed if
-search has not found the issue yet; it never blindly creates a second issue.
+The canonical proposal hash is the idempotency key. The service signs
+`mcc-region-proposal/v1:<hash>` with the GitHub App key and embeds that
+signature beside the hash. Recovery accepts a search result only when both
+markers match, preventing a public user from forging an idempotency match.
 
-If a request definitely failed **before** GitHub received the create call but
-left a pending row (for example, an operator-confirmed local network failure),
-audit GitHub first for the proposal hash shown to the contributor. Only after
-confirming no matching issue exists, stop the container, back up the ledger,
-and clear that one hash:
+Before creating an issue, the service writes a durable `pending` ledger row.
+After GitHub returns `201`, it stores the issue number and URL before posting
+chunks. A retry with a `created` row resumes chunks. A retry with only a
+`pending` row searches GitHub and fails closed if search has not indexed the
+issue; it never blindly creates a second issue.
+
+If an operator proves that a request failed before GitHub received it but left
+a pending row, audit GitHub first for the proposal hash. Only after confirming
+that no matching issue exists, stop the service, back up the ledger, and clear
+that one pending hash:
 
 ```sh
-docker compose -f docker-compose.yml -f region-proposal-gateway/compose.example.yml stop region-proposal-gateway
-cp -a region-proposal-state region-proposal-state.audit-backup
-sqlite3 region-proposal-state/proposals.sqlite3 \
+cd /opt/meshcore-region-proposals/tools/region-proposal-gateway
+sudo docker compose \
+  --env-file /etc/meshcore-region-proposals/environment \
+  -f compose.example.yml stop region-proposal-gateway
+sudo cp -a /var/lib/meshcore-region-proposals \
+  /var/lib/meshcore-region-proposals.audit-backup
+sudo sqlite3 /var/lib/meshcore-region-proposals/proposals.sqlite3 \
   "SELECT proposal_sha256,state,issue_number,issue_url FROM proposals WHERE proposal_sha256='HASH';"
-sqlite3 region-proposal-state/proposals.sqlite3 \
+sudo sqlite3 /var/lib/meshcore-region-proposals/proposals.sqlite3 \
   "DELETE FROM proposals WHERE proposal_sha256='HASH' AND state='pending';"
-docker compose -f docker-compose.yml -f region-proposal-gateway/compose.example.yml start region-proposal-gateway
+sudo docker compose \
+  --env-file /etc/meshcore-region-proposals/environment \
+  -f compose.example.yml start region-proposal-gateway
 ```
 
-Never delete a `created` row. Never clear `pending` merely because GitHub search
-is briefly empty; search indexing is eventually consistent.
+Never delete a `created` row. Never clear `pending` merely because GitHub
+search is briefly empty; search indexing is eventually consistent.
+
+Keep the production checkout synchronized with every region-data release. The
+service reloads changed authority files atomically and fails stale proposals
+closed if the website and host temporarily have different membership data.
 
 ## Tests
 
-No third-party packages or live credentials are needed:
+No third-party Python packages or live credentials are needed:
 
 ```sh
 python -m unittest discover -s tools/region-proposal-gateway/tests -v
@@ -181,7 +191,3 @@ The suite uses synthetic authority data and mocked Turnstile/GitHub transports.
 It covers strict validation, authority reload, exact CORS/HTTP contracts,
 Turnstile hostname/action checks, least-privilege token requests, idempotent
 issue creation, URL validation, and resumable large-payload chunks.
-
-The HTTP server uses a 15-second socket read timeout, closes every response,
-bounds worker threads and rate-limit keys, and the compose example also caps
-PIDs, memory, CPU, and Linux capabilities.

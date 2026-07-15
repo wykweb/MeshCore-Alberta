@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import {
   DEFAULT_SUBMISSION_ENDPOINT,
   MAX_SUBMISSION_BYTES,
@@ -28,6 +29,10 @@ const canonicalProposal = {
 };
 
 const canonicalProposalHash = await proposalSha256(canonicalProposal);
+const editorHtml = await readFile(
+  new URL("../../docs/config/editor/index.html", import.meta.url),
+  "utf8"
+);
 
 const successBody = {
   ok: true,
@@ -46,6 +51,11 @@ function jsonResponse(body, options = {}) {
 }
 
 test("uses the anonymous proposal API by default and allows a trusted page override", () => {
+  const productionEndpoint = "https://regions-api.meshcore.ca/api/meshcore-regions/proposals";
+  assert.equal(DEFAULT_SUBMISSION_ENDPOINT, productionEndpoint);
+  assert.ok(editorHtml.includes(
+    `name="meshcore-region-proposal-endpoint" content="${productionEndpoint}"`
+  ));
   assert.equal(configuredSubmissionEndpoint(null), DEFAULT_SUBMISSION_ENDPOINT);
   assert.equal(configuredSubmissionEndpoint({
     querySelector() { return { content: "https://proposals.example.ca/v1/" }; }
