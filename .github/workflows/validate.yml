@@ -20,6 +20,9 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Validate anonymous proposal gateway
+        run: python -m unittest discover -s tools/region-proposal-gateway/tests -v
+
       - name: Install documentation dependencies
         run: pip install mkdocs-material mkdocs-macros-plugin pyyaml mkdocs-glightbox pymdown-extensions shapely==2.0.6 mkdocs-redirects==1.2.2
 

@@ -1,0 +1,73 @@
+services:
+  # Extend the existing service so Caddy has one private path to the gateway.
+  splashpage:
+    networks:
+      tunnel:
+      region_proposal_private:
+        ipv4_address: 172.30.255.2
+
+  region-proposal-gateway:
+    build:
+      # Loaded after /home/neonx/splashpage/docker-compose.yml.
+      context: ./region-proposal-gateway
+    image: meshcore-canada/region-proposal-gateway:local
+    restart: unless-stopped
+    read_only: true
+    init: true
+    user: "10001:10001"
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 64
+    mem_limit: 256m
+    cpus: 1.0
+    tmpfs:
+      - /tmp:size=16m,noexec,nosuid,nodev
+    expose:
+      # Caddy is the only caller, over the dedicated private network.
+      - "8787"
+    environment:
+      LISTEN_HOST: 0.0.0.0
+      PORT: "8787"
+      BASE_PATH: /api/meshcore-regions/proposals
+      ALLOWED_ORIGINS: https://canadaverse.org,https://meshcore.ca,https://config.meshcore.ca
+      TURNSTILE_SITE_KEY: replace-with-public-site-key
+      TURNSTILE_EXPECTED_HOSTNAMES: canadaverse.org,meshcore.ca,config.meshcore.ca
+      TURNSTILE_SECRET_FILE: /run/secrets/turnstile
+      GITHUB_APP_CLIENT_ID: Iv1.replace-me
+      GITHUB_APP_INSTALLATION_ID: "12345678"
+      GITHUB_APP_PRIVATE_KEY_FILE: /run/secrets/github-app.pem
+      MEMBERSHIP_PATH: /data/regions/canada-region-membership.csv
+      CATALOG_PATH: /data/regions/canada-regions.json
+      CELLS_DIR: /data/cells
+      LEDGER_PATH: /state/proposals.sqlite3
+      RATE_LIMIT: "5"
+      RATE_WINDOW_SECONDS: "3600"
+      PRE_RATE_LIMIT: "30"
+      PRE_RATE_WINDOW_SECONDS: "300"
+      GLOBAL_PRE_RATE_LIMIT: "300"
+      GLOBAL_PRE_RATE_WINDOW_SECONDS: "60"
+      MAX_WORKERS: "32"
+      # Only the fixed splashpage/Caddy address may supply X-Forwarded-For.
+      TRUSTED_PROXY_CIDRS: 172.30.255.2/32
+    volumes:
+      # Live splashpage assets described by the Pi deployment.
+      - ./debug/meshcore-regions/assets:/data/regions:ro
+      - ./region-editor-data:/data/cells:ro
+      - ./region-proposal-state:/state
+      - ./secrets/turnstile:/run/secrets/turnstile:ro
+      - ./secrets/github-app.pem:/run/secrets/github-app.pem:ro
+    networks:
+      region_proposal_private:
+        ipv4_address: 172.30.255.3
+      region_proposal_egress:
+
+networks:
+  tunnel:
+    external: true
+  region_proposal_private:
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.30.255.0/29
+  region_proposal_egress:

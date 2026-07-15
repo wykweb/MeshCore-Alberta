@@ -1,77 +1,295 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  buildRegionProposalIssue,
-  MAX_GITHUB_ISSUE_URL_LENGTH
+  DEFAULT_SUBMISSION_ENDPOINT,
+  MAX_SUBMISSION_BYTES,
+  SUBMISSION_CONTRACT_VERSION,
+  TURNSTILE_SCRIPT_URL,
+  buildSubmissionRequest,
+  canonicalProposalJson,
+  configuredSubmissionEndpoint,
+  fetchSubmissionConfig,
+  loadTurnstile,
+  proposalSha256,
+  renderTurnstile,
+  submitRegionProposal,
+  validateSubmissionConfig,
+  validateSubmissionResponse
 } from "../../docs/config/editor/issue.js";
 
-function proposal(changes) {
+const canonicalProposal = {
+  schema: "mcc-region-editor-proposal/v1",
+  baseMembershipSha256: "a".repeat(64),
+  submittedBy: "Local operator",
+  reason: "These census cells belong with the neighbouring radio community.",
+  changes: [
+    { DGUID: "2021S05120001", from: "wat", to: "wel" }
+  ]
+};
+
+const canonicalProposalHash = await proposalSha256(canonicalProposal);
+
+const successBody = {
+  ok: true,
+  issueNumber: 123,
+  issueUrl: "https://github.com/MeshCore-ca/MeshCore-Canada/issues/123",
+  proposalSha256: canonicalProposalHash,
+  duplicate: false
+};
+
+function jsonResponse(body, options = {}) {
   return {
-    schema: "mcc-region-editor-proposal/v1",
-    baseMembershipSha256: "a".repeat(64),
-    submittedBy: "Local operator",
-    reason: "These census cells belong with the neighbouring radio community.",
-    changes
+    ok: options.ok !== false,
+    status: options.status || 200,
+    async json() { return body; }
   };
 }
 
-test("builds a complete prefilled region proposal issue", () => {
-  const result = buildRegionProposalIssue(proposal([
-    { DGUID: "2021S05120001", from: "wat", to: "wel" },
-    { DGUID: "2021S05120002", from: "wat", to: "wel" }
-  ]), {
-    labelForTag: (tag) => ({ wat: "Waterloo", wel: "Wellington" })[tag]
+test("uses the anonymous proposal API by default and allows a trusted page override", () => {
+  assert.equal(configuredSubmissionEndpoint(null), DEFAULT_SUBMISSION_ENDPOINT);
+  assert.equal(configuredSubmissionEndpoint({
+    querySelector() { return { content: "https://proposals.example.ca/v1/" }; }
+  }), "https://proposals.example.ca/v1");
+  assert.throws(() => configuredSubmissionEndpoint({
+    querySelector() { return { content: "http://proposals.example.ca/v1" }; }
+  }), /must use HTTPS/);
+});
+
+test("fetches and validates the versioned public Turnstile config without credentials", async () => {
+  let request;
+  const config = await fetchSubmissionConfig({
+    endpoint: "https://proposals.example.ca/v1",
+    fetchImpl: async (url, options) => {
+      request = { url, options };
+      return jsonResponse({
+        version: 1,
+        turnstileSiteKey: "0x4AAAA-public-site-key",
+        turnstileAction: "region_proposal"
+      });
+    }
   });
 
-  assert.equal(result.requiresAttachment, false);
-  assert.ok(result.url.length <= MAX_GITHUB_ISSUE_URL_LENGTH);
-  const url = new URL(result.url);
-  assert.equal(url.origin, "https://github.com");
-  assert.equal(url.pathname, "/MeshCore-ca/MeshCore-Canada/issues/new");
-  assert.equal(url.searchParams.get("template"), "region_boundary_proposal.yml");
-  assert.equal(url.searchParams.get("affected_regions"), "Waterloo (wat) → Wellington (wel)");
-  assert.equal(url.searchParams.get("change_count"), "2");
-  assert.equal(url.searchParams.get("submitted_by"), "Local operator");
-  const proposalField = url.searchParams.get("proposal");
-  assert.match(proposalField, /^```json\n/);
-  assert.match(proposalField, /\n```\n$/);
-  assert.deepEqual(JSON.parse(proposalField.slice(8, -5)), proposal([
-    { DGUID: "2021S05120001", from: "wat", to: "wel" },
-    { DGUID: "2021S05120002", from: "wat", to: "wel" }
-  ]));
-  assert.equal(url.searchParams.has("labels"), false);
+  assert.deepEqual(config, {
+    version: SUBMISSION_CONTRACT_VERSION,
+    endpoint: "https://proposals.example.ca/v1",
+    turnstileSiteKey: "0x4AAAA-public-site-key",
+    turnstileAction: "region_proposal"
+  });
+  assert.equal(request.url, "https://proposals.example.ca/v1/config");
+  const { signal, ...requestOptions } = request.options;
+  assert.equal(signal.aborted, false);
+  assert.deepEqual(requestOptions, {
+    method: "GET",
+    headers: { Accept: "application/json" },
+    cache: "no-store",
+    credentials: "omit",
+    mode: "cors",
+    referrerPolicy: "no-referrer"
+  });
 });
 
-test("falls back to an attachment workflow when the prefill URL is too large", () => {
-  const result = buildRegionProposalIssue(proposal([
-    { DGUID: "2021S05120001", from: "wat", to: "wel" }
-  ]), { maxUrlLength: 800 });
-
-  assert.equal(result.requiresAttachment, true);
-  const url = new URL(result.url);
-  assert.equal(url.searchParams.get("template"), "region_boundary_proposal.yml");
-  assert.equal(url.searchParams.has("proposal"), false);
-  assert.equal(url.searchParams.get("reason"), proposal([
-    { DGUID: "2021S05120001", from: "wat", to: "wel" }
-  ]).reason);
-  assert.match(result.proposalJson, /2021S05120001/);
+test("rejects malformed or mismatched public config", () => {
+  assert.throws(() => validateSubmissionConfig({
+    version: 2,
+    turnstileSiteKey: "site-key",
+    turnstileAction: "region_proposal"
+  }), /invalid public configuration/);
+  assert.throws(() => validateSubmissionConfig({
+    version: 1,
+    turnstileSiteKey: "site-key",
+    turnstileAction: "contains spaces"
+  }), /invalid public configuration/);
 });
 
-test("rejects an empty unvalidated proposal", () => {
-  assert.throws(() => buildRegionProposalIssue(proposal([])), /must contain changes/);
-});
-
-test("keeps the real oversized fallback below the conservative URL budget", () => {
-  const large = proposal([
-    { DGUID: "2021S05120001", from: "wat", to: "wel" }
-  ]);
-  large.reason = "地".repeat(1000);
-  const result = buildRegionProposalIssue(large);
-
-  assert.equal(result.requiresAttachment, true);
-  assert.ok(result.url.length <= MAX_GITHUB_ISSUE_URL_LENGTH);
-  assert.equal(
-    new URL(result.url).searchParams.get("reason"),
-    "See the attached canonical proposal JSON."
+test("builds the exact versioned submission wrapper including the honeypot", () => {
+  assert.deepEqual(buildSubmissionRequest(canonicalProposal, "turnstile-token", ""), {
+    version: 1,
+    proposal: canonicalProposal,
+    turnstileToken: "turnstile-token",
+    website: ""
+  });
+  assert.throws(
+    () => buildSubmissionRequest(canonicalProposal, "", ""),
+    /Complete the anti-spam check/
   );
+  assert.throws(
+    () => buildSubmissionRequest(canonicalProposal, "x".repeat(2049), ""),
+    /Complete the anti-spam check/
+  );
+  assert.throws(
+    () => buildSubmissionRequest(canonicalProposal, "turnstile-token", "x".repeat(201)),
+    /could not be submitted/
+  );
+});
+
+test("posts the canonical proposal without cookies and accepts a safe issue response", async () => {
+  let request;
+  const result = await submitRegionProposal({
+    endpoint: "https://proposals.example.ca/v1",
+    proposal: canonicalProposal,
+    turnstileToken: "turnstile-token",
+    website: "",
+    fetchImpl: async (url, options) => {
+      request = { url, options };
+      return jsonResponse(successBody, { status: 201 });
+    }
+  });
+
+  assert.deepEqual(result, successBody);
+  assert.equal(request.url, "https://proposals.example.ca/v1");
+  const { signal, ...requestOptions } = request.options;
+  assert.equal(signal.aborted, false);
+  assert.deepEqual(requestOptions, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    credentials: "omit",
+    mode: "cors",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({
+      version: 1,
+      proposal: canonicalProposal,
+      turnstileToken: "turnstile-token",
+      website: ""
+    })
+  });
+});
+
+test("canonical hash is stable across object key order", async () => {
+  const reordered = {
+    changes: canonicalProposal.changes,
+    reason: canonicalProposal.reason,
+    submittedBy: canonicalProposal.submittedBy,
+    baseMembershipSha256: canonicalProposal.baseMembershipSha256,
+    schema: canonicalProposal.schema
+  };
+  assert.equal(canonicalProposalJson(reordered), canonicalProposalJson(canonicalProposal));
+  assert.equal(await proposalSha256(reordered), canonicalProposalHash);
+});
+
+test("only accepts the exact public MeshCore Canada issue URL and submitted hash", () => {
+  assert.deepEqual(validateSubmissionResponse(successBody, canonicalProposalHash), successBody);
+  assert.throws(() => validateSubmissionResponse({
+    ...successBody,
+    issueUrl: "https://example.net/MeshCore-ca/MeshCore-Canada/issues/123"
+  }, canonicalProposalHash), /review link was invalid/);
+  assert.throws(() => validateSubmissionResponse({
+    ...successBody,
+    issueUrl: "https://github.com/MeshCore-ca/MeshCore-Canada/issues/124"
+  }, canonicalProposalHash), /review link was invalid/);
+  assert.throws(() => validateSubmissionResponse({
+    ...successBody,
+    issueUrl: "https://github.com/MeshCore-ca/MeshCore-Canada/issues/123?redirect=evil"
+  }, canonicalProposalHash), /review link was invalid/);
+  assert.throws(() => validateSubmissionResponse(successBody, "c".repeat(64)), /review link was invalid/);
+});
+
+test("surfaces a bounded public API error while leaving retry to the caller", async () => {
+  await assert.rejects(
+    submitRegionProposal({
+      proposal: canonicalProposal,
+      turnstileToken: "turnstile-token",
+      fetchImpl: async () => jsonResponse({
+        ok: false,
+        error: {
+          code: "rate-limited",
+          message: `This untrusted server text must not be shown. ${"x".repeat(300)}`
+        }
+      }, { ok: false, status: 429 })
+    }),
+    (error) => {
+      assert.equal(error.code, "rate_limited");
+      assert.equal(error.status, 429);
+      assert.equal(error.retryable, true);
+      assert.equal(error.message, "Too many proposals were submitted from this connection. Wait a few minutes and try again.");
+      return true;
+    }
+  );
+});
+
+test("rejects an oversized submission before contacting the service", async () => {
+  let contacted = false;
+  await assert.rejects(submitRegionProposal({
+    proposal: { value: "x".repeat(MAX_SUBMISSION_BYTES) },
+    turnstileToken: "turnstile-token",
+    fetchImpl: async () => { contacted = true; return jsonResponse(successBody); }
+  }), (error) => error.code === "payload_too_large" && error.retryable === false);
+  assert.equal(contacted, false);
+});
+
+test("times out a stalled config request", async () => {
+  await assert.rejects(fetchSubmissionConfig({
+    timeoutMs: 5,
+    fetchImpl: async (_url, options) => new Promise((_resolve, reject) => {
+      options.signal.addEventListener("abort", () => reject(new Error("aborted")), { once: true });
+    })
+  }), (error) => error.code === "request_timeout");
+});
+
+test("renders Turnstile explicitly without a hidden response field", () => {
+  let receivedContainer;
+  let receivedOptions;
+  const callbacks = {
+    onToken() {},
+    onError() {},
+    onExpired() {},
+    onTimeout() {}
+  };
+  const widgetId = renderTurnstile({
+    render(container, options) {
+      receivedContainer = container;
+      receivedOptions = options;
+      return 42;
+    }
+  }, "#challenge", {
+    turnstileSiteKey: "0x4AAAA-public-site-key",
+    turnstileAction: "region_proposal"
+  }, callbacks);
+
+  assert.equal(widgetId, 42);
+  assert.equal(receivedContainer, "#challenge");
+  assert.deepEqual(receivedOptions, {
+    sitekey: "0x4AAAA-public-site-key",
+    action: "region_proposal",
+    theme: "dark",
+    appearance: "interaction-only",
+    "response-field": false,
+    callback: callbacks.onToken,
+    "error-callback": callbacks.onError,
+    "expired-callback": callbacks.onExpired,
+    "timeout-callback": callbacks.onTimeout
+  });
+  assert.equal(
+    TURNSTILE_SCRIPT_URL,
+    "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+  );
+});
+
+test("loads the official Turnstile script dynamically", async () => {
+  const listeners = {};
+  const script = {
+    addEventListener(name, callback) { listeners[name] = callback; }
+  };
+  let appended;
+  const windowObject = {};
+  const documentObject = {
+    createElement(name) {
+      assert.equal(name, "script");
+      return script;
+    },
+    head: {
+      appendChild(node) { appended = node; }
+    }
+  };
+
+  const loading = loadTurnstile({ windowObject, documentObject });
+  assert.equal(appended, script);
+  assert.equal(script.src, TURNSTILE_SCRIPT_URL);
+  assert.equal(script.async, true);
+  assert.equal(script.defer, true);
+  windowObject.turnstile = { render() {} };
+  listeners.load();
+  assert.equal(await loading, windowObject.turnstile);
 });
