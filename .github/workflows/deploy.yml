@@ -5,6 +5,7 @@ on:
     branches: [ main ]  # change to master if your branch is named master
   release:
     types: [ published ]  # redeploy site when new firmware is released
+  workflow_dispatch:
 
 permissions:
   contents: write       # needed so the action can push to gh-pages

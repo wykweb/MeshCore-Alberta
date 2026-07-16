@@ -13,8 +13,10 @@ https://api.meshcore.ca:21323/api/meshcore-canada/submissions
 ```
 
 The service never changes repository contents or region authority. It creates
-fixed-format `enhancement` issues in `MeshCore-ca/MeshCore-Canada`; maintainers
-review and apply accepted work through the normal repository process.
+fixed-format issues in `MeshCore-ca/MeshCore-Canada`. Boundary proposals also
+receive `boundary-update`; after public review, a repository-owned GitHub
+Action applies only a proposal closed as **Completed** by an allowlisted
+maintainer.
 
 See the repository-root [`instructions.md`](../../instructions.md) for the
 copyable administrator activation, merge, verification, and rollback runbook.
@@ -79,7 +81,9 @@ The server revalidates every boundary proposal against the mounted authority:
 
 Changed authority files reload atomically. Invalid or mismatched authority
 fails closed. Large canonical boundary payloads use deterministic gzip plus
-base64url issue-comment chunks; retries resume only missing valid chunks.
+base64url issue-comment chunks; retries resume only missing valid chunks. The
+canonical boundary payload is stored in machine-readable HTML comments instead
+of adding a large JSON block to the public review text.
 
 ## GitHub App and Turnstile
 
@@ -94,6 +98,21 @@ The service signs a short-lived RS256 App JWT with `openssl`, requests an
 installation token restricted again to that repository and `issues: write`,
 and rejects broader returned scope. No App token or private key reaches a
 browser. Do not replace this with a personal access token.
+
+The approval Action is deliberately separate from the public service. It uses
+the matching public key in the repository secret
+`MCC_SUBMISSION_PUBLIC_KEY_PEM` to verify the signed proposal. The public key
+cannot create signatures, and the App still has no Contents permission.
+`.github/region-boundary-automation.json` contains the exact label, App
+identities, and maintainer allowlist.
+
+An accepted boundary issue must be App-authored, carry `boundary-update`, and
+be closed as **Completed** by an allowlisted maintainer. The Action rechecks the
+signature, current authority, and jurisdiction; records the reviewed census
+override; regenerates and validates the national layer; commits to `main`;
+and explicitly queues the Pages deployment. **Close as not planned** rejects a
+proposal without applying it. Verification or generation failure reopens the
+issue and leaves `main` unchanged.
 
 The Turnstile widget must be held in a MeshCore Canada account and allow
 `meshcore.ca` and `config.meshcore.ca`. Siteverify must return `success`, an
@@ -180,8 +199,9 @@ curl -si -H 'Origin: https://example.invalid' "$API/config"
 
 Expect HTTP 200 config, action `meshcore_submission`, exact allowed-origin
 CORS, HTTP 204 preflight, and denial without an allow-origin header for the
-invalid origin. The root runbook requires this branch deployment to pass before
-PR #39 is merged, followed by signed-out live tests of both forms.
+invalid origin. The root runbook requires the branch deployment to pass before
+the reviewed pull request is merged, followed by signed-out live tests of both
+forms and a not-planned boundary rejection test.
 
 ## Idempotency, recovery, and backups
 
@@ -215,6 +235,7 @@ No live credentials or third-party Python packages are required:
 
 ```sh
 python -m unittest discover -s tools/region-proposal-gateway/tests -v
+python -m unittest discover -s tests/automation -v
 node --test tests/editor/*.test.mjs
 python scripts/validate_community_submission.py
 ```
@@ -222,4 +243,6 @@ python scripts/validate_community_submission.py
 The suites cover both schemas, authority reload, canonical hashes, exact
 CORS/HTTP behavior, Turnstile hostname/action checks, least-privilege App
 tokens, safe issue rendering, idempotency, URL validation, and resumable
-large-payload comments.
+large-payload comments. The automation suite also covers approval gates,
+signature-bound payload extraction, source locking, safe archive extraction,
+and complete CSD/split decision recording.

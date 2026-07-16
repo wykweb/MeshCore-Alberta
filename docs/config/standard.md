@@ -308,14 +308,20 @@ The national maintainers enforce the data model; they do not invent local identi
 2. Generate a before/after diff and QA report.
 3. Obtain affected local and jurisdiction review. Cross-boundary proposals require every affected side.
 4. Allow a public review window recorded in the proposal.
-5. Merge the registry change and publish a versioned release.
-6. Keep the previous release available for rollback and migration.
+5. An allowlisted maintainer approves by closing the `boundary-update` issue
+   as **Completed**. **Close as not planned** rejects it.
+6. The repository Action verifies the signed proposal, records the reviewed
+   census decision, regenerates and validates the full national layer, commits
+   it to `main`, and queues publication.
+7. Keep the previous release available for rollback and migration.
 
 ### Boundary editor proposals
 
 The boundary editor works on the same census cells as the generator. Its normal action reassigns a whole CSD, with its containing CD shown as review context. It never saves a freehand polygon as operational geometry. A reviewer may use DA-level draft edits to shape an exceptional split, but the approved `splitExceptions` record must expand that draft to list every DA in the CSD, with no duplicate or missing DGUID.
 
-The editor is a static page at `/config/editor/` and requires no contributor account. It builds a versioned proposal with the base membership hash and before/after owner for each changed DGUID. On submission, a MeshCore Canada-hosted proposal service repeats the authority and proposal checks, verifies the anti-spam challenge, and uses a repository-restricted GitHub App to open the public review issue automatically. The static page and production service are both operated by MeshCore Canada; no GitHub credential or signing secret is placed in the browser. Maintainers may reproduce the proposal check with `scripts/validate-region-proposal.py`, which adds CD/CSD context and requires a reason before review; an author may also be recorded. A maintainer must review and merge the resulting decision into `municipal-overrides.json`, regenerate all artifacts, and pass the release checks before the public boundary changes. Editor drafts, browser-local state, and submitted issues are never operational authority.
+The editor is a static page at `/config/editor/` and requires no contributor account. It builds a versioned proposal with the base membership hash and before/after owner for each changed DGUID. On submission, a MeshCore Canada-hosted proposal service repeats the authority and proposal checks, verifies the anti-spam challenge, and uses a repository-restricted GitHub App to open the public review issue automatically. The static page and production service are both operated by MeshCore Canada; no GitHub credential or signing secret is placed in the browser. The public App has Issues read/write only and cannot change the map. The canonical proposal is signed by the App and stored in machine-readable issue markers while the issue shows the human review summary. Maintainers may reproduce the proposal check with `scripts/validate-region-proposal.py`, which adds CD/CSD context and requires a reason before review; an author may also be recorded.
+
+After local and public review, an allowlisted maintainer closes the labelled issue as **Completed**. The repository-owned Action independently verifies the issue author, closer, label, App signature, proposal hash, current base membership, and jurisdiction. A whole-CSD decision becomes a cohort override; a partial-CSD decision becomes an explicit split listing every DA in that CSD. The Action then regenerates both national partitions and editor cells from locked sources, runs the release checks, commits the source decision and generated artifacts to `main`, and queues the site deployment. Any failure before publication reopens the issue and leaves `main` unchanged. Closing as **Not planned** makes no authority change. Editor drafts, browser-local state, and submitted issues are never operational authority until this approval and validation complete.
 
 The editor's own census-cell geometry (`docs/assets/regions/cells/`) was last regenerated with `scripts/build-region-editor-data.py --retain 10%` rather than the script's 8% default, because 8% collapses a BC dissemination area to a degenerate shape; the retained value is recorded alongside the rest of the build inputs in `docs/assets/regions/cells/manifest.json`.
 

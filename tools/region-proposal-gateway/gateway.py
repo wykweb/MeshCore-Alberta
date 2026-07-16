@@ -46,6 +46,7 @@ GITHUB_OWNER = "MeshCore-ca"
 GITHUB_REPO = "MeshCore-Canada"
 GITHUB_FULL_NAME = f"{GITHUB_OWNER}/{GITHUB_REPO}"
 GITHUB_LABEL = "enhancement"
+BOUNDARY_UPDATE_LABEL = "boundary-update"
 GITHUB_API_VERSION = "2026-03-10"
 MAX_BODY_BYTES = 2 * 1024 * 1024
 MAX_CHANGES = 25_000
@@ -850,7 +851,12 @@ class GitHubAppClient:
                     )
                 status, _, result = self._call(
                     "POST", f"/repos/{GITHUB_OWNER}/{GITHUB_REPO}/issues",
-                    {"title": title, "body": issue_body, "labels": [GITHUB_LABEL]},
+                    {
+                        "title": title,
+                        "body": issue_body,
+                        "labels": [GITHUB_LABEL]
+                        + ([BOUNDARY_UPDATE_LABEL] if schema == PROPOSAL_SCHEMA else []),
+                    },
                     return_definitive_client_error=True,
                 )
                 if status != 201 or not isinstance(result, dict) or not _is_int(result.get("number")):
@@ -939,7 +945,7 @@ class GitHubAppClient:
 
 def build_chunk_comment(proposal_hash: str, index: int, total: int, chunk: str) -> str:
     marker = f"<!-- mcc-submission-chunk:{proposal_hash}:{index}/{total} -->"
-    return f"{marker}\nCanonical submission payload chunk {index}/{total} (`gzip+base64url`, padding omitted):\n\n```text\n{chunk}\n```\n"
+    return f"{marker}\n<!-- submission-payload-chunk-gzip-base64url:{chunk} -->\n"
 
 
 def build_region_issue(
@@ -971,21 +977,20 @@ def build_region_issue(
         f"<p>{reason}</p>\n\n"
         "### Moves\n\n"
         f"{move_lines}\n\n"
+        "_Maintainers: close this issue as **Completed** to approve it, or **Not planned** to reject it._\n\n"
     )
+    compressed = gzip.compress(canonical_bytes, compresslevel=9, mtime=0)
+    encoded_payload = _b64url(compressed)
     chunked = len(canonical_bytes) > INLINE_CANONICAL_BYTES
-    inline_body = ""
+    inline_body = common + f"<!-- submission-payload-gzip-base64url:{encoded_payload} -->\n"
     if not chunked:
-        inline_body = common + "### Canonical proposal JSON\n\n" + _json_fence(canonical_bytes.decode("utf-8"))
         chunked = len(inline_body.encode("utf-8")) > MAX_ISSUE_BODY_BYTES
     if not chunked:
         body = inline_body
     else:
-        compressed = gzip.compress(canonical_bytes, compresslevel=9, mtime=0)
-        chunks = (len(_b64url(compressed)) + COMMENT_CHUNK_CHARS - 1) // COMMENT_CHUNK_CHARS
+        chunks = (len(encoded_payload) + COMMENT_CHUNK_CHARS - 1) // COMMENT_CHUNK_CHARS
         body = common + (
-            "### Canonical proposal JSON\n\n"
-            f"The exact canonical JSON is stored in **{chunks}** ordered issue comment(s) as deterministic "
-            "`gzip+base64url` data. Base64 padding is omitted. The gateway resumes any missing chunks on retry.\n"
+            f"<!-- submission-payload-chunks:{chunks} -->\n"
         )
     if len(body.encode("utf-8")) > MAX_ISSUE_BODY_BYTES:
         raise UpstreamError("issue_body_too_large")
