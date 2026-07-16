@@ -30,6 +30,22 @@ jobs:
         run: |
           pip install mkdocs-macros-plugin pyyaml mkdocs-glightbox pymdown-extensions shapely==2.0.6 mkdocs-redirects==1.2.2
 
+      - name: Validate MeshCore Canada proposal service
+        shell: bash
+        run: |
+          python -m unittest discover -s tools/region-proposal-gateway/tests -v
+          node --test tests/editor/*.test.mjs
+          node --check docs/config/editor/app.js
+          node --check docs/config/editor/issue.js
+          node --check docs/javascripts/community-submission.js
+          node --check docs/javascripts/submission-form.js
+          if git grep -n -E 'canadaverse\.org|regions-api\.meshcore\.ca|/api/meshcore-regions/proposals|192\.168\.0\.111|/home/neonx|splashpage' -- \
+            docs/config/editor docs/javascripts docs/submit-idea.md \
+            tools/region-proposal-gateway instructions.md; then
+            echo 'Production submission files must use only the approved MeshCore Canada endpoint.' >&2
+            exit 1
+          fi
+
       - name: Validate exclusive national partition
         run: node scripts/validate-regions.js
 
@@ -37,6 +53,9 @@ jobs:
         run: |
           python scripts/verify-region-geometry.py
           python scripts/verify-region-geometry.py --partition docs/assets/regions/canada-region-partition-digital.geojson
+
+      - name: Validate community submission helper
+        run: python scripts/validate_community_submission.py
 
       - name: Build MkDocs site
         run: mkdocs build --strict
