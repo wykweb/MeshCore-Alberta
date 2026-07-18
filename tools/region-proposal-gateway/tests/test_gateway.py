@@ -318,12 +318,14 @@ class GitHubTests(unittest.TestCase):
         token_call = transport.calls[0]
         self.assertEqual(token_call[3], {"permissions": {"issues": "write"}, "repositories": ["MeshCore-Canada"]})
         issue_call = next(call for call in transport.calls if call[1].endswith("/issues"))
-        self.assertEqual(issue_call[3]["labels"], ["enhancement"])
+        self.assertEqual(issue_call[3]["labels"], ["enhancement", "boundary-update"])
         body = issue_call[3]["body"]
         self.assertIn("submission-sha256:" + digest, body)
         self.assertIn("@\u200bteam", body)
-        self.assertNotIn("<script>", body.split("### Canonical proposal JSON", 1)[0])
-        self.assertIn("````json", body)  # dynamic fence encloses user backticks
+        self.assertNotIn("<script>", body)
+        self.assertNotIn("Canonical proposal JSON", body)
+        self.assertIn("submission-payload-gzip-base64url:", body)
+        self.assertIn("close this issue as **Completed**", body)
         self.assertNotIn("contents", json.dumps(transport.calls).lower())
 
     def test_duplicate_search_returns_existing_issue_without_create(self):
