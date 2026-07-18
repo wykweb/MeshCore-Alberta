@@ -1051,7 +1051,7 @@
       "</select>" +
       (externalChoices
         ? '<div class="mcc-neighbour-paths"><h3 class="mcc-picker-heading">Neighbouring network paths</h3>' +
-          '<p class="mcc-hint">These paths were seen in Canada–U.S. routes. Nothing outside Canada is added to the boundary map.</p>' +
+          '<p class="mcc-hint">Add one only when this repeater should forward traffic for that area. Nothing outside Canada is added to the boundary map.</p>' +
           '<div class="mcc-neighbour-path-list">' + externalChoices + "</div></div>"
         : "");
 

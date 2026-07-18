@@ -83,7 +83,7 @@ Register an automatic shared area only when operators on every side confirm rout
 
 A region path is a forwarding choice, not a prediction of RF range. Large coverage does not require a mountain. Elevation, water paths, ordinary rooftop sites, and linked repeaters can all produce long routes.
 
-Every repeater keeps one Canadian home region. Operators may then add complete Canadian or neighbouring U.S. paths that the repeater should forward. Region matching is exact, so every intended scope needs its complete ancestry. The configurator never adds a neighbouring path automatically and never draws U.S. geometry.
+Every repeater keeps one Canadian home region. Operators may then add complete Canadian or neighbouring U.S. paths that the repeater should forward. Region matching is exact, so every intended scope needs its complete ancestry. The configurator never adds a neighbouring path automatically and never draws U.S. geometry. Hearing traffic from an area is not enough by itself; add its path only when this repeater is meant to forward traffic scoped to that area.
 
 Use the smallest useful set and spread work across repeaters:
 

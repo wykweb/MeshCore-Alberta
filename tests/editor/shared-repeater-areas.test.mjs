@@ -180,6 +180,7 @@ test("Ontario bridge selection emits complete Canadian and Western New York bran
     "region def can on on-gtha gta tor|on on-ktw wat|* us us-ny"
   );
   assert.match(regionsScript, /Different repeaters can carry different paths to spread traffic\./);
+  assert.match(regionsScript, /Add one only when this repeater should forward traffic for that area\./);
   assert.match(regionsScript, /Nothing outside Canada is added to the boundary map\./);
   assert.match(regionsScript, /requestedExternalPaths/);
 });
