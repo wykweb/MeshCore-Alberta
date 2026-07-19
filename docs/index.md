@@ -8,7 +8,8 @@ using affordable LoRa radio hardware.
 
 [Get Started](getting-started/index.md){ .md-button .md-button--primary }
 [Calgary Network](calgary/index.md){ .md-button }
-[Alberta Network](network/index.md){ .md-button }
+[Alberta Network](provinces/alberta.md){ .md-button }
+[Why MeshCore Network?](why-meshcore.md){ .md-button }
 
 ---
 

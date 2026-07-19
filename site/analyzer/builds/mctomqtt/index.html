@@ -6,12 +6,14 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Regional MeshCore documentation, configuration, monitoring and community resources for Alberta, Canada.">
       
       
-        <link rel="canonical" href="https://meshcore.ca/analyzer/builds/mctomqtt/">
+      
+        <link rel="canonical" href="https://albertamesh.ca/analyzer/builds/mctomqtt/">
       
       
-        <link rel="prev" href="../../verify/">
+        <link rel="prev" href="../../remoteterm/">
       
       
         <link rel="next" href="../meshcore-ha/">
@@ -21,15 +23,15 @@
       
       
       <link rel="icon" href="../../../assets/MeshCore-Canada-Favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>MCtoMQTT Script - MeshCore Canada</title>
+        <title>MCtoMQTT Script - Alberta MeshCore</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -50,6 +52,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../../assets/regions/regions.css">
     
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -74,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mctomqtt-script-usb-serial-host" class="md-skip">
+        <a href="#mctomqtt-usb-serial-host" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +96,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="MeshCore Canada" class="md-header__button md-logo" aria-label="MeshCore Canada" data-md-component="logo">
+    <a href="../../.." title="Alberta MeshCore" class="md-header__button md-logo" aria-label="Alberta MeshCore" data-md-component="logo">
       
   <img src="../../../assets/MeshCore-Canada-Favicon.png" alt="logo">
 
@@ -103,7 +109,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            MeshCore Canada
+            Alberta MeshCore
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -163,13 +169,13 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/MrAlders0n/MeshCore-Canada" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/wykweb/MeshCore-Alberta" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    MeshCore Canada
+    wykweb/MeshCore-Alberta
   </div>
 </a>
       </div>
@@ -199,22 +205,22 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="MeshCore Canada" class="md-nav__button md-logo" aria-label="MeshCore Canada" data-md-component="logo">
+    <a href="../../.." title="Alberta MeshCore" class="md-nav__button md-logo" aria-label="Alberta MeshCore" data-md-component="logo">
       
   <img src="../../../assets/MeshCore-Canada-Favicon.png" alt="logo">
 
     </a>
-    MeshCore Canada
+    Alberta MeshCore
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/MrAlders0n/MeshCore-Canada" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/wykweb/MeshCore-Alberta" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    MeshCore Canada
+    wykweb/MeshCore-Alberta
   </div>
 </a>
     </div>
@@ -254,62 +260,15 @@
   
   
   
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    MeshCore
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    MeshCore
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../../../meshcore/intro/" class="md-nav__link">
+      <a href="../../../why-meshcore/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Introduction
+    Why MeshCore Network?
   
 
     
@@ -318,154 +277,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../meshcore/faq/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    FAQ
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../meshcore/companions/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Recommended Companions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../meshcore/repeaters/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Recommended Repeaters
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../meshcore/repeater-builds/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Repeater Build Guides
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../meshcore/antennas/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Recommended Antennas
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -554,6 +365,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data-collection-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Collection & Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../verify/" class="md-nav__link">
         
   
@@ -561,7 +400,119 @@
   <span class="md-ellipsis">
     
   
-    Verify Observer Status
+    Check Your Observer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../broker-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Broker Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../iata-codes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IATA Region Codes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../remoteterm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RemoteTerm
   
 
     
@@ -592,10 +543,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" checked>
         
           
-          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
             
   
   
@@ -613,8 +564,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3_3">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_8">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -691,17 +642,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-it-does" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What It Does
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -713,17 +653,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-setup-one-liner" class="md-nav__link">
+  <a href="#quick-setup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Setup (One-Liner)
+        Quick Setup
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="Quick Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#fresh-install" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -731,6 +672,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -757,10 +703,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#companion-devices-bleserialtcp" class="md-nav__link">
+  <a href="#companion-devices-ble-serial-tcp" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Companion Devices (BLE/Serial/TCP)
+        Companion Devices (BLE / Serial / TCP)
       
     </span>
   </a>
@@ -768,10 +714,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#additional-script-options" class="md-nav__link">
+  <a href="#quick-reference" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Additional Script Options
+        Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#script-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Script Options
       
     </span>
   </a>
@@ -922,7 +879,7 @@
   <span class="md-ellipsis">
     
   
-    Mesh Directory
+    Hardware
   
 
     
@@ -938,11 +895,900 @@
             <span class="md-nav__icon md-icon"></span>
             
   
+    Hardware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hardware/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hardware/recommended-antenna/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Antenna
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hardware/recommended-companions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Companion Nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repeater Nodes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Repeater Nodes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hardware/recommended-repeaters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repeater Nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hardware/repeater-mounting-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repeater Mounting Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hardware/repeater-solar-batteries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repeater Solar Batteries
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hardware/repeater-solar-300mw-diy-build/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    300mW Solar Repeater Build Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hardware/repeater-solar-1w-diy-build/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1W Solar Repeater Build Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hardware/wire-connector-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wire Connector Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MeshCore
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MeshCore
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    General
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../meshcore/general-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../meshcore/general-faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MeshCore FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../meshcore/general-howto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MeshCore How-To
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../meshcore/general-meshcore-roles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MeshCore Roles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repeater Configurator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firmware Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Firmware Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../meshcore/flash-companion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flashing a Companion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../meshcore/flash-repeater/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flashing a Repeater
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../meshcore/update-repeater-ota/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Updating a Repeater (OTA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../meshcore/generate-repeater-id/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generating a Repeater ID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../meshcore/flash-room-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flashing a Room Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../meshcore/firmware-rak-custom-display/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RAK4631 Custom Display Firmware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../meshcore/firmware-heltec-v3-wifi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Heltec V3 Wi-Fi Firmware
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mesh Directory
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
     Mesh Directory
   
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../provinces/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1274,10 +2120,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1295,8 +2141,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1404,6 +2250,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../submit-idea/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Share an Idea
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://forum.meshcore.ca/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Forum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../contributing/" class="md-nav__link">
         
   
@@ -1451,17 +2351,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-it-does" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What It Does
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1473,17 +2362,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-setup-one-liner" class="md-nav__link">
+  <a href="#quick-setup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Setup (One-Liner)
+        Quick Setup
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="Quick Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#fresh-install" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1491,6 +2381,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1517,10 +2412,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#companion-devices-bleserialtcp" class="md-nav__link">
+  <a href="#companion-devices-ble-serial-tcp" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Companion Devices (BLE/Serial/TCP)
+        Companion Devices (BLE / Serial / TCP)
       
     </span>
   </a>
@@ -1528,10 +2423,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#additional-script-options" class="md-nav__link">
+  <a href="#quick-reference" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Additional Script Options
+        Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#script-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Script Options
       
     </span>
   </a>
@@ -1569,37 +2475,83 @@
   
 
 
-<h1 id="mctomqtt-script-usb-serial-host">MCtoMQTT Script (USB Serial Host)<a class="headerlink" href="#mctomqtt-script-usb-serial-host" title="Permanent link">&para;</a></h1>
-<p>Use <code>meshcoretomqtt</code> to bridge a USB-connected MeshCore node (repeater, room server, or any packet-log device) to MQTT brokers. This runs on a Linux or macOS host with the device connected over USB serial.</p>
-<h2 id="what-it-does">What It Does<a class="headerlink" href="#what-it-does" title="Permanent link">&para;</a></h2>
+<h1 id="mctomqtt-usb-serial-host">MCtoMQTT (USB Serial Host)<a class="headerlink" href="#mctomqtt-usb-serial-host" title="Permanent link">&para;</a></h1>
+<p>Bridge a USB-connected MeshCore node to MQTT brokers using <code>meshcoretomqtt</code>. This runs on a Linux or macOS host with the device connected over USB serial.</p>
+<div class="admonition info">
+<p class="admonition-title">What it does</p>
 <p>The MCtoMQTT service reads packets from a MeshCore device over its serial port and publishes them to one or more MQTT brokers. A config drop-in file tells it where to send the data.</p>
+</div>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
-<ul>
-<li>A MeshCore device with packet logging enabled, connected via USB serial</li>
-<li>Linux or macOS host</li>
-<li><code>curl</code> installed</li>
-<li>Your 3-character IATA region code (e.g. <code>YOW</code> for Ottawa, <code>YYZ</code> for Toronto)</li>
-</ul>
-<h2 id="quick-setup-one-liner">Quick Setup (One-Liner)<a class="headerlink" href="#quick-setup-one-liner" title="Permanent link">&para;</a></h2>
-<p>If <code>meshcoretomqtt</code> is already installed, run:</p>
-<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://live.meshcore.ca/scripts/add-canadaverse-meshcore-broker.sh<span class="o">)</span><span class="w"> </span>--device<span class="w"> </span>serial-host
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Device</td>
+<td>MeshCore node with packet logging enabled, connected via USB serial</td>
+</tr>
+<tr>
+<td>Host</td>
+<td>Linux or macOS</td>
+</tr>
+<tr>
+<td>Tools</td>
+<td><code>curl</code> installed</td>
+</tr>
+<tr>
+<td>IATA Code</td>
+<td>Your real 3-letter IATA airport code (e.g. <code>YOW</code> for Ottawa)</td>
+</tr>
+<tr>
+<td>Mesh Settings</td>
+<td>Connected radio uses <code>USA/Canada (Recommended)</code> and 3-byte path hashes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quick-setup">Quick Setup<a class="headerlink" href="#quick-setup" title="Permanent link">&para;</a></h2>
+<p>If <code>meshcoretomqtt</code> is already installed, run the one-liner to add the MeshCore.ca brokers:</p>
+<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://meshcore.ca/analyzer/scripts/add-meshcore-ca-broker.sh<span class="o">)</span><span class="w"> </span>--device<span class="w"> </span>serial-host
 </code></pre></div>
 <p>This creates a config drop-in at <code>/etc/mctomqtt/config.d/20-meshcore-ca.toml</code> pointing at the MeshCore.ca broker pair, then restarts the service.</p>
-<h2 id="fresh-install">Fresh Install<a class="headerlink" href="#fresh-install" title="Permanent link">&para;</a></h2>
-<p>If <code>meshcoretomqtt</code> is not yet installed, add <code>--install-mctomqtt</code> and the script will run the upstream installer first, then apply the broker config:</p>
-<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://live.meshcore.ca/scripts/add-canadaverse-meshcore-broker.sh<span class="o">)</span><span class="w"> </span>--device<span class="w"> </span>serial-host<span class="w"> </span>--install-mctomqtt
+<h3 id="fresh-install">Fresh Install<a class="headerlink" href="#fresh-install" title="Permanent link">&para;</a></h3>
+<p>If <code>meshcoretomqtt</code> is not yet installed, add <code>--install-mctomqtt</code> and the script will run the upstream installer first:</p>
+<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://meshcore.ca/analyzer/scripts/add-meshcore-ca-broker.sh<span class="o">)</span><span class="w"> </span>--device<span class="w"> </span>serial-host<span class="w"> </span>--install-mctomqtt
 </code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
 <p>The upstream installer will walk you through serial port selection.</p>
+</div>
 <h2 id="specifying-your-region">Specifying Your Region<a class="headerlink" href="#specifying-your-region" title="Permanent link">&para;</a></h2>
-<p>Pass your IATA code via the <code>--iata</code> flag or the <code>MESHCORE_CA_IATA</code> environment variable:</p>
-<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://live.meshcore.ca/scripts/add-canadaverse-meshcore-broker.sh<span class="o">)</span><span class="w"> </span>--device<span class="w"> </span>serial-host<span class="w"> </span>--iata<span class="w"> </span>YOW
+<p>Pass your IATA code via the <code>--iata</code> flag or the <code>MESHCORE_CA_IATA</code> environment variable. Use the real 3-letter airport code nearest to you:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Flag</label><label for="__tabbed_1_2">Environment Variable</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://meshcore.ca/analyzer/scripts/add-meshcore-ca-broker.sh<span class="o">)</span><span class="w"> </span>--device<span class="w"> </span>serial-host<span class="w"> </span>--iata<span class="w"> </span>YOW
 </code></pre></div>
-<p>Or:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">MESHCORE_CA_IATA</span><span class="o">=</span>YOW<span class="w"> </span>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://live.meshcore.ca/scripts/add-canadaverse-meshcore-broker.sh<span class="o">)</span><span class="w"> </span>--device<span class="w"> </span>serial-host
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nv">MESHCORE_CA_IATA</span><span class="o">=</span>YOW<span class="w"> </span>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://meshcore.ca/analyzer/scripts/add-meshcore-ca-broker.sh<span class="o">)</span><span class="w"> </span>--device<span class="w"> </span>serial-host
 </code></pre></div>
+</div>
+</div>
+</div>
 <p>If omitted, the script will prompt interactively.</p>
+<div class="admonition warning">
+<p class="admonition-title">Use a real IATA code</p>
+<p>The helper shows a Canadian quick list when it prompts. If your nearest real airport code is not shown, you can still type it, but continue only if it is a real IATA airport code. Do not use <code>CAN</code> as shorthand for Canada; it is a real airport code for Guangzhou and will tag your observer to the wrong region.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Check the radio first</p>
+<p>MCtoMQTT can publish packets from a connected radio, but it cannot fix a radio that is listening on the wrong mesh settings. Before troubleshooting MQTT, confirm the MeshCore node is on <strong>USA/Canada (Recommended)</strong> or <code>910.525 MHz / 62.5 kHz / SF7 / CR5</code>, and that companion-style radios use 3-byte path hashes.</p>
+</div>
 <h2 id="what-the-script-creates">What the Script Creates<a class="headerlink" href="#what-the-script-creates" title="Permanent link">&para;</a></h2>
-<p>The drop-in config at <code>/etc/mctomqtt/config.d/20-meshcore-ca.toml</code> looks like this:</p>
+<p>The drop-in config at <code>/etc/mctomqtt/config.d/20-meshcore-ca.toml</code>:</p>
+<details class="note">
+<summary>View full config</summary>
 <div class="highlight"><pre><span></span><code><span class="k">[general]</span>
 <span class="n">iata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;YOW&quot;</span>
 
@@ -1639,22 +2591,29 @@
 <span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;token&quot;</span>
 <span class="n">audience</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;mqtt2.meshcore.ca&quot;</span>
 </code></pre></div>
-<h2 id="companion-devices-bleserialtcp">Companion Devices (BLE/Serial/TCP)<a class="headerlink" href="#companion-devices-bleserialtcp" title="Permanent link">&para;</a></h2>
+</details>
+<h2 id="companion-devices-ble-serial-tcp">Companion Devices (BLE / Serial / TCP)<a class="headerlink" href="#companion-devices-ble-serial-tcp" title="Permanent link">&para;</a></h2>
 <p>For companion radios (not packet-log serial hosts), use the companion path instead:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Linux / macOS</label><label for="__tabbed_1_2">Windows PowerShell</label></div>
+<p>Before running the companion helper, set the companion to <strong>USA/Canada (Recommended)</strong> and set path hash mode to <strong>3-byte</strong> in the companion app or config tool.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Linux / macOS</label><label for="__tabbed_2_2">Windows PowerShell</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://live.meshcore.ca/scripts/add-canadaverse-meshcore-broker.sh<span class="o">)</span><span class="w"> </span>--device<span class="w"> </span>companion
+<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://meshcore.ca/analyzer/scripts/add-meshcore-ca-broker.sh<span class="o">)</span><span class="w"> </span>--device<span class="w"> </span>companion
 </code></pre></div>
 <p>Add <code>--install-packetcapture</code> for a fresh install. The upstream installer will walk you through BLE, serial, or TCP connection setup.</p>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="n">powershell</span> <span class="n">-NoProfile</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span> <span class="n">-Command</span> <span class="s2">&quot;iwr https://live.meshcore.ca/scripts/add-canadaverse-packetcapture-broker.ps1 -UseBasicParsing | iex&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="n">powershell</span> <span class="n">-NoProfile</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span> <span class="n">-Command</span> <span class="s2">&quot;iwr https://meshcore.ca/analyzer/scripts/add-meshcore-ca-packetcapture-broker.ps1 -UseBasicParsing | iex&quot;</span>
 </code></pre></div>
 <p>Config is stored under <code>%USERPROFILE%\.meshcore-packet-capture\.env.local</code>.</p>
 </div>
 </div>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Windows and Serial Hosts</p>
+<p>There is no upstream <code>meshcoretomqtt</code> Windows installer. Keep packet-log serial hosts on Linux or macOS. The Windows PowerShell helper is for companion radios only.</p>
+</div>
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1679,11 +2638,7 @@
 </tr>
 </tbody>
 </table>
-<div class="admonition warning">
-<p class="admonition-title">Windows and Serial Hosts</p>
-<p>There is no upstream <code>meshcoretomqtt</code> Windows installer. Keep packet-log serial hosts on Linux or macOS. The Windows PowerShell helper is for companion radios only.</p>
-</div>
-<h2 id="additional-script-options">Additional Script Options<a class="headerlink" href="#additional-script-options" title="Permanent link">&para;</a></h2>
+<h2 id="script-options">Script Options<a class="headerlink" href="#script-options" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1694,7 +2649,11 @@
 <tbody>
 <tr>
 <td><code>--iata CODE</code></td>
-<td>3-character region code</td>
+<td>Real 3-letter IATA airport code</td>
+</tr>
+<tr>
+<td><code>--list-iata</code></td>
+<td>Show the Canadian quick-list choices</td>
 </tr>
 <tr>
 <td><code>--device TYPE</code></td>
@@ -1723,7 +2682,7 @@
 </tbody>
 </table>
 <h2 id="verify">Verify<a class="headerlink" href="#verify" title="Permanent link">&para;</a></h2>
-<p>Once your service is running, head to <a href="../../verify/">Verify Observer Status</a> to confirm it's reporting correctly.</p>
+<p>Once your service is running, head to <a href="../../verify/">Check Your Observer</a> to confirm it's reporting correctly.</p>
 
 
 
@@ -1782,7 +2741,11 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.top", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/regions/regions.js"></script>
+      
+        <script src="../../../javascripts/submission-form.js"></script>
       
     
   </body>
