@@ -21,11 +21,15 @@ The identifier used for Calgary documentation and monitoring is: YYC
 - [Calgary MeshCore Beacon](https://beacon.canadaverse.org/?tab=Live&iata=YYC)
 - [YYC MeshCore Beacon](https://dev.meshcore.ca/?tab=Map&iata=YYC)
 - [Calgary MeshCore Krabs Lagoon](https://canadaverse.org/krab/lagoon/)
+- [MeshMonitoring.com Crescope Calgary YYC](https://corescopeyyc.meshmonitoring.com/#/live)
 - [Calgary MeshCore CoreComms.net](https://corecomms.net/?region=na)
 - [Calgary MeshCore CoreComms.net](https://corecomms.net/?region=na)
 - [Calgary MeshCore WAEV.app](https://waev.app/#/live-map/@51.08251,-114.08311,9.27z)
 - [Calgary MeshCore MeshRank.net Chat](https://www.meshrank.net/messages?channel=chat)
-- [MeshMonitoring.com](https://meshmonitoring.com/)
+- [MeshMonitoring.com - Monitoring the Canadian & USA Mesh Networks](https://meshmonitoring.com/)
+- [Interlink Radio Canada - Canadian Meshtastic & MeshCore Support Channels](https://interlinkradio.weebly.com/)
+- [Canadaverse MeshCore Launch Directory](https://canadaverse.org/)
+- [MeshCore Canada](https://meshcore.ca/)
 
 ## RX Channels
 

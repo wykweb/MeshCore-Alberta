@@ -53,6 +53,17 @@ markdown_extensions:
 nav:
   - Welcome: index.md
   - Why MeshCore Network?: why-meshcore.md
+
+  - Calgary:
+      - Overview: calgary/index.md
+      - Configuration: calgary/configuration.md
+
+  - Edmonton:
+      - Overview: edmonton/index.md
+      - Configuration: edmonton/configuration.md
+
+  - MeshCore Canada: meshcore-canada.md
+  
   - Analyzer & MQTT:
       - Overview: analyzer/intro.md
       - Data Collection & Access: analyzer/data-collection-access.md

@@ -24,14 +24,30 @@ You will generally need:
 7. Join the local community
 8. Consider contributing an observer or repeater
 
-!!! warning "Do not guess radio settings"
+## Alberta MeshCore Radio Settings
 
-    Use only settings published on the Alberta configuration page or provided
-    by a confirmed regional coordinator.
+Use the following radio settings when joining the Alberta MeshCore network.
+
+| Setting          | Value           |
+| ---------------- | --------------- |
+| Frequency        | **910.525 MHz** |
+| Bandwidth        | **62.5 kHz**    |
+| Spreading Factor | **SF7**         |
+| Coding Rate      | **4/5**         |
+| TX Power         | **22 dBm**      |
+
+These settings are used throughout the Alberta MeshCore network to ensure compatibility between companion nodes, repeaters, and community infrastructure.
+
+Before joining the network, verify that your device matches these settings exactly. Incorrect radio parameters will prevent your node from communicating with other MeshCore devices in Alberta.
+
+If you are unsure about your configuration, refer to the regional documentation or ask for assistance from the Alberta MeshCore community before deploying your node.
 
 ## Next steps
 
-- [What is MeshCore?](what-is-meshcore.md)
-- [Choose hardware](hardware.md)
+- [Why MeshCore & What is MeshCore?](../why-meshcore.md)
+- [Choose hardware](../hardware/overview/)
 - [Calgary network](../calgary/index.md)
+- [Edmonton Network](../edmonton/index.md)
 - [Alberta network settings](../network/alberta-settings.md)
+- [Calgary, Alberta Configuration](../calgary/configuration.md)
+- [MeshCore Canada - MeshCore.ca](../meshcore-canada.md)

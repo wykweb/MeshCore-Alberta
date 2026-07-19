@@ -10,10 +10,10 @@ Configuration recommendations are maintained by the Alberta MeshCore community. 
 
 | Item | Value |
 |------|------|
-| Community | Calgary |
+| Community | Edmonton |
 | Province | Alberta |
 | Country | Canada |
-| Regional Identifier | YYC |
+| Regional Identifier | YEG |
 
 ---
 
@@ -29,7 +29,7 @@ Match these settings to participate in the Calgary MeshCore network.
 | Coding Rate | **4/5** |
 | TX Power | **22 dBm** |
 
-> **Note:** These settings represent the current Calgary recommendations and may change as the Alberta MeshCore network evolves.
+> **Note:** These settings represent the current Edmonton recommendations and may change as the Alberta MeshCore network evolves.
 
 ---
 
