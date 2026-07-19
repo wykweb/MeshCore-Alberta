@@ -31,50 +31,53 @@ The identifier used for Calgary documentation and monitoring is: YYC
 
 These are the recommended public receive (RX) channels commonly used throughout the Calgary MeshCore community. You can subscribe to any or all of them depending on your interests.
 
+### Primary Public Channel
+
+- `Public`
+
 ### Community
 
-- Public
-- #yyc
-- #calgary
-- #airdrie
-- #albertamesh
-- #meshcorealberta
+- `#yyc`
+- `#calgary`
+- `#airdrie`
+- `#albertamesh`
+- `#meshcorealberta`
 
 ### Mesh Networks
 
-- #meshcore
-- #meshmonitoring
-- #monitoring
-- #mesh
-- #meshtastic
-- #corecomms
+- `#meshcore`
+- `#meshmonitoring`
+- `#monitoring`
+- `#mesh`
+- `#meshtastic`
+- `#corecomms`
 
 ### Weather
 
-- #weather
-- #yyc-weather
-- #wx
+- `#weather`
+- `#yyc-weather`
+- `#wx`
 
 ### Emergency
 
-- #emergency
-- #sos
+- `#emergency`
+- `#sos`
 
 ### Radio
 
-- #hamradio
+- `#hamradio`
 
 ### Information
 
-- #news
-- #sports
-- #joke
-- #jokes
+- `#news`
+- `#sports`
+- `#joke`
+- `#jokes`
 
 ### Development & Testing
 
-- #chat
-- #bot
-- #wardriving
-- #test
-- #testing
+- `#chat`
+- `#bot`
+- `#wardriving`
+- `#test`
+- `#testing`
