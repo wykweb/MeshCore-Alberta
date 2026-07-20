@@ -7,21 +7,16 @@ Calgary and Alberta build resilient, long-range text communication networks
 using affordable LoRa radio hardware.
 
 [Get Started With MeshCore](getting-started/index.md){ .md-button .md-button--primary }
-
 [Why MeshCore Network?](why-meshcore.md){ .md-button .md-button--primary }
 
 [Calgary Network](calgary/index.md){ .md-button .md-button--primary }
 
 [Airdrie Network](airdrie/index.md){ .md-button .md-button--primary }
-
 [Edmonton Network](edmonton/index.md){ .md-button .md-button--primary }
-
 [Lethbridge Network](lethbridge/index.md){ .md-button .md-button--primary }
 
 [Alberta Network](provinces/alberta.md){ .md-button .md-button--primary }
-
 [MeshCore Canada](meshcore-canada.md){ .md-button .md-button--primary }
-
 [Monitoring Tools](monitoring-tools.md){ .md-button .md-button--primary }
 
 ---

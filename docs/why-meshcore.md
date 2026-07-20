@@ -7,8 +7,8 @@ Alberta MeshCore is a community-supported effort to build a practical, long-rang
 The network is intended to complement—not replace—cellular service, internet access, amateur radio, public-safety systems or emergency services. Its value is that compatible radios can exchange short messages directly and through community-operated repeaters without depending on a commercial cellular network.
 
 [Get Started](getting-started/index.md){ .md-button .md-button--primary }
-[Calgary Network](calgary/index.md){ .md-button }
-[Alberta Network](provinces/alberta.md){ .md-button }
+[Calgary Network](calgary/index.md){ .md-button .md-button--primary }
+[Alberta Network](provinces/alberta.md){ .md-button .md-button--primary }
 
 ---
 

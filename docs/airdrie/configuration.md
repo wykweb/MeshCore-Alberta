@@ -3,13 +3,11 @@
 ## Airdrie Quick Links
 
 [Airdrie MeshCore Map](https://live.meshcore.ca/#/live){ .md-button .md-button--primary }
-
 [Airdrie LIVE Map WAEV.app](https://waev.app/#/live-map/@51.28107,-113.99966,14.47z){ .md-button .md-button--primary }
 
 [Airdrie MeshCore Coverage - MeshMapper](https://yyc.meshmapper.net/?lat=51.28120&lon=-113.99718&zoom=13.43){ .md-button .md-button--primary }
 
 [BRuTuS BR35 Repeater - Observer](https://live.meshcore.ca#/nodes/a56efdd9){ .md-button .md-button--primary }
-
 [BRuTuS MC-HASS - Observer](https://live.meshcore.ca/#/observers/1A1C359D53F22161E2E2B285979FA37712FC6106334D06872A3AAD000B07879C){ .md-button .md-button--primary }
 
 ## Regional Identifier
@@ -66,11 +64,9 @@ When deploying nodes in Airdrie:
 ## Related Pages
 
 [Airdrie MeshCore Map](https://live.meshcore.ca/#/live){ .md-button .md-button--primary }
-
 [Airdrie LIVE Map WAEV.app](https://waev.app/#/live-map/@51.28107,-113.99966,14.47z){ .md-button .md-button--primary }
 
 [Airdrie MeshCore Coverage - MeshMapper](https://yyc.meshmapper.net/?lat=51.28120&lon=-113.99718&zoom=13.43){ .md-button .md-button--primary }
 
 [BRuTuS BR35 Repeater - Observer](https://live.meshcore.ca#/nodes/a56efdd9){ .md-button .md-button--primary }
-
 [BRuTuS MC-HASS - Observer](https://live.meshcore.ca/#/observers/1A1C359D53F22161E2E2B285979FA37712FC6106334D06872A3AAD000B07879C){ .md-button .md-button--primary }
