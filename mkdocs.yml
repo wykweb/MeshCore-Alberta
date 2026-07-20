@@ -54,6 +54,8 @@ nav:
   - Welcome: index.md
   - Why MeshCore Network?: why-meshcore.md
 
+  - Alberta MeshCore Monitoring Tools: monitoring-tools.md
+  
   - Airdrie:
       - Overview: airdrie/index.md
       - Configuration: airdrie/configuration.md
