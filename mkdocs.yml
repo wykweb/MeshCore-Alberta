@@ -68,6 +68,10 @@ nav:
       - Overview: edmonton/index.md
       - Configuration: edmonton/configuration.md
 
+  - Lethbridge:
+      - Overview: lethbridge/index.md
+      - Configuration: lethbridge/configuration.md
+
   - MeshCore Canada: meshcore-canada.md
   
   - Analyzer & MQTT:

@@ -45,7 +45,7 @@ If you are unsure about your configuration, refer to the regional documentation 
 ## Next steps
 
 - [Why MeshCore & What is MeshCore?](../why-meshcore.md)
-- [Choose hardware](../hardware/overview/)
+- [Choose hardware](../hardware/overview.md)
 - [Calgary network](../calgary/index.md)
 - [Edmonton Network](../edmonton/index.md)
 - [Alberta network settings](../network/alberta-settings.md)
