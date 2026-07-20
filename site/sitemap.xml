@@ -2,270 +2,282 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://albertamesh.ca/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/contributing/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
+    </url>
+    <url>
+         <loc>https://albertamesh.ca/meshcore-canada/</loc>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/submit-idea/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/why-meshcore/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
+    </url>
+    <url>
+         <loc>https://albertamesh.ca/airdrie/</loc>
+         <lastmod>2026-07-20</lastmod>
+    </url>
+    <url>
+         <loc>https://albertamesh.ca/airdrie/configuration/</loc>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/analyzer/broker-reference/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/analyzer/data-collection-access/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/analyzer/iata-codes/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/analyzer/intro/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/analyzer/remoteterm/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/analyzer/troubleshooting/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/analyzer/verify/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/analyzer/builds/mctomqtt/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/analyzer/builds/meshcore-ha/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/analyzer/builds/mqtt-firmware/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/analyzer/builds/pymc/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/assets/regions/vendor/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/calgary/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/calgary/configuration/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/communities/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/config/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/config/map/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/config/standard/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/edmonton/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/edmonton/configuration/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/getting-started/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/getting-started/hardware/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/getting-started/what-is-meshcore/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/hardware/overview/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/hardware/recommended-antenna/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/hardware/recommended-companions/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/hardware/recommended-repeaters/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/hardware/repeater-mounting-options/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/hardware/repeater-solar-1w-diy-build/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/hardware/repeater-solar-300mw-diy-build/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/hardware/repeater-solar-batteries/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/hardware/wire-connector-types/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/meshcore/firmware-heltec-v3-wifi/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/meshcore/firmware-rak-custom-display/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/meshcore/flash-companion/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/meshcore/flash-repeater/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/meshcore/flash-room-server/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/meshcore/general-faq/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/meshcore/general-howto/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/meshcore/general-meshcore-roles/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/meshcore/general-overview/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/meshcore/generate-repeater-id/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/meshcore/update-repeater-ota/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/monitoring/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/network/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/network/alberta-settings/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/nodes/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/nodes/repeaters/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/provinces/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/provinces/alberta/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/provinces/british-columbia/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/provinces/manitoba/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/provinces/new-brunswick/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/provinces/newfoundland-and-labrador/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/provinces/nova-scotia/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/provinces/ontario/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/provinces/prince-edward-island/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/provinces/quebec/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/provinces/saskatchewan/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/provinces/territories/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/resources/getting-started/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/resources/glossary/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
     <url>
          <loc>https://albertamesh.ca/resources/links/</loc>
-         <lastmod>2026-07-19</lastmod>
+         <lastmod>2026-07-20</lastmod>
     </url>
 </urlset>

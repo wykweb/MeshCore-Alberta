@@ -54,6 +54,10 @@ nav:
   - Welcome: index.md
   - Why MeshCore Network?: why-meshcore.md
 
+  - Airdrie:
+      - Overview: airdrie/index.md
+      - Configuration: airdrie/configuration.md
+  
   - Calgary:
       - Overview: calgary/index.md
       - Configuration: calgary/configuration.md

@@ -12,6 +12,8 @@ using affordable LoRa radio hardware.
 
 [Calgary Network](calgary/index.md){ .md-button .md-button--primary }
 
+[Airdrie Network](airdrie/index.md){ .md-button .md-button--primary }
+
 [Edmonton Network](edmonton/index.md){ .md-button .md-button--primary }
 
 [Alberta Network](provinces/alberta.md){ .md-button .md-button--primary }
