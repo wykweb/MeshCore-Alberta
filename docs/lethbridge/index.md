@@ -38,9 +38,37 @@ Visit the official YQLMesh website for information about the Lethbridge MeshCore
 
 ## Lethbridge LIVE Coverage Map
 
-View MeshCore coverage and wardriving results for Lethbridge and the surrounding area.
+[Open Lethbridge MeshCore Map](https://yql.meshmapper.net/?lat=49.69674&lon=-112.83309&zoom=12.25){ .md-button .md-button--primary }
 
-[Open Lethbridge LIVE Map](https://yql.meshmapper.net/?lat=49.69766&lon=-112.85630&zoom=12.32){ .md-button .md-button--primary }
+## MeshMapper Lethbridge
+
+Open the main Lethbridge MeshMapper dashboard.
+
+[Open MeshMapper Lethbridge](https://yql.meshmapper.net/){ .md-button .md-button--primary }
+
+## Lethbridge Repeater ID Usage
+
+Check repeater ID usage for the Lethbridge regional network before configuring or deploying a repeater.
+
+[View Lethbridge Repeater ID Usage](https://yql.meshmapper.net/?repeater_ids){ .md-button .md-button--primary }
+
+## Lethbridge Repeaters List
+
+View the Repeaters list for Lethbridge area.
+
+[Open Lethbridge Repeaters List](https://yql.meshmapper.net/?repeater_list){ .md-button .md-button--primary }
+
+## Lethbridge Observers List
+
+View the Observers list for Lethbridge area.
+
+[Open Lethbridge Observers List](https://yql.meshmapper.net/?observers){ .md-button .md-button--primary }
+
+## Lethbridge Leaderboard List
+
+View the Leaderboard list for the Lethbridge area.
+
+[Open Lethbridge Leaderboard List](https://yql.meshmapper.net/leaderboard.php){ .md-button .md-button--primary }
 
 ## Getting Connected
 

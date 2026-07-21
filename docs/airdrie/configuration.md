@@ -22,6 +22,10 @@ Airdrie uses the following regional identifier:
 
 Use **YYC** wherever a MeshCore application, MQTT service, observer, packet analyzer, or regional configuration asks for the local IATA or regional zone.
 
+## Airdrie MeshCore Map
+
+[View Airdrie MeshCore Map](https://yyc.meshmapper.net/index.php?lat=51.28151&lon=-114.00604&zoom=13.49){ .md-button .md-button--primary }
+
 ## Alberta Radio Settings
 
 Use the following settings for the Alberta MeshCore network:

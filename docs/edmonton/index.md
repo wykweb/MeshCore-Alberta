@@ -22,6 +22,34 @@ The Alberta MeshCore project complements the Edmonton community by providing pro
 
 ---
 
+## Edmonton MeshCore Map
+
+[View Edmonton MeshCore Map](https://yeg.meshmapper.net/index.php?lat=53.51829&lon=-113.47144&zoom=10.87){ .md-button .md-button--primary }
+
+## Edmonton Repeater ID Usage
+
+Check repeater ID usage for the Edmonton regional network before configuring or deploying a repeater.
+
+[View Edmonton Repeater ID Usage](https://yeg.meshmapper.net/?repeater_ids){ .md-button .md-button--primary }
+
+## Edmonton Repeater List
+
+Check the repeater list for the Edmonton regional network.
+
+[View Edmonton Repeater List](https://yeg.meshmapper.net/?repeater_list){ .md-button .md-button--primary }
+
+## Edmonton Observers List
+
+Check the observers list for the Edmonton regional network.
+
+[View Edmonton Observers List](https://yeg.meshmapper.net/?observers){ .md-button .md-button--primary }
+
+## Edmonton Leaderboard List - YEG Stats
+
+Check the leaderboard list for the Edmonton regional network.
+
+[View Edmonton Leaderboard List](https://yeg.meshmapper.net/leaderboard.php){ .md-button .md-button--primary }
+
 ## Edmonton MeshCore Resources
 
 Coming Soon

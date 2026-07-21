@@ -28,6 +28,10 @@ The goal is to improve MeshCore coverage throughout Airdrie while maintaining co
 
 Airdrie uses **YYC** because it is part of the Calgary regional operating area.
 
+## Airdrie MeshCore Map
+
+[View Airdrie MeshCore Map](https://yyc.meshmapper.net/index.php?lat=51.28151&lon=-114.00604&zoom=13.49){ .md-button .md-button--primary }
+
 ## Getting Connected
 
 To join the Airdrie MeshCore network:

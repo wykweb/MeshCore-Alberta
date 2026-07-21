@@ -68,6 +68,10 @@ nav:
       - Overview: edmonton/index.md
       - Configuration: edmonton/configuration.md
 
+  - Red Deer:
+      - Overview: red-deer/index.md
+      - Configuration: red-deer/configuration.md
+
   - Lethbridge:
       - Overview: lethbridge/index.md
       - Configuration: lethbridge/configuration.md

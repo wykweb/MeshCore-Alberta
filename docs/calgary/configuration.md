@@ -15,7 +15,35 @@ Configuration recommendations are maintained by the Alberta MeshCore community. 
 | Country | Canada |
 | Regional Identifier | YYC |
 
+## Calgary MeshCore Map
+
+[View Calgary MeshCore Map](https://yyc.meshmapper.net/index.php?lat=51.09012&lon=-114.06190&zoom=10.66){ .md-button .md-button--primary }
+
 ---
+
+## Calgary Repeater ID Usage
+
+Check repeater ID usage for the Calgary regional network before configuring or deploying a repeater.
+
+[View Calgary Repeater ID Usage](https://yyc.meshmapper.net/?repeater_ids){ .md-button .md-button--primary }
+
+## Calgary Repeater List
+
+Check the repeater list for the Calgary regional network.
+
+[View Calgary Repeater List](https://yyc.meshmapper.net/?repeater_list){ .md-button .md-button--primary }
+
+## Calgary Observers List
+
+Check the observers list for the Calgary regional network.
+
+[View Calgary Observers List](https://yyc.meshmapper.net/?observers){ .md-button .md-button--primary }
+
+## Calgary Leaderboard List - YYC Stats
+
+Check the leaderboard list for the Calgary regional network.
+
+[View Calgary Leaderboard List](https://yyc.meshmapper.net/leaderboard.php){ .md-button .md-button--primary }
 
 ## MeshCore Radio Defaults
 

@@ -14,6 +14,7 @@ using affordable LoRa radio hardware.
 [Airdrie Network](airdrie/index.md){ .md-button .md-button--primary }
 [Edmonton Network](edmonton/index.md){ .md-button .md-button--primary }
 [Lethbridge Network](lethbridge/index.md){ .md-button .md-button--primary }
+[Red Deer Network](red-deer/index.md){ .md-button .md-button--primary }
 
 [Alberta Network](provinces/alberta.md){ .md-button .md-button--primary }
 [MeshCore Canada](meshcore-canada.md){ .md-button .md-button--primary }
